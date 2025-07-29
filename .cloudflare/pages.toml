@@ -1,4 +1,4 @@
 [build]
-command = "npm install -g pnpm && pnpm install && pnpm run build"
+command = "pnpm install && pnpm run build:pages"
 output_directory = "build/client"
 base_directory = "."
