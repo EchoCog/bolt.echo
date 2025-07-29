@@ -1,7 +1,0 @@
-# wrangler.toml
-name = 'bolt-echo'
-pages_build_output_dir = "build/client"
-compatibility_date = "2024-07-18"
-compatibility_flags = ["nodejs_compat"]
-
-
