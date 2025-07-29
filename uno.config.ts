@@ -1,7 +1,7 @@
 import { defineConfig } from 'unocss';
 
 export default defineConfig({
-  // UnoCSS configuration
+  // unocss configuration
   shortcuts: [
     // add your shortcuts here
   ],
