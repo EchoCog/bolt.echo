@@ -7,7 +7,7 @@ Deep Tree Echo is an AI-powered agent built on the open-source Bolt framework. I
 
 ## What Makes Deep Tree Echo Different
 
-Claude, v0, etc are incredible—but you can't install packages, run backends or edit code. That's where Deep Tree Echo stands out:
+Claude, v0, etc are incredible- but you can't install packages, run backends or edit code. That’s where Deep Tree Echo stands out:
 
 - **Full-Stack in the Browser**: Deep Tree Echo integrates cutting-edge AI models with an in-browser development environment powered by **StackBlitz’s WebContainers**. This allows you to:
   - Install and run npm tools and libraries (like Vite, Next.js, and more)
@@ -16,9 +16,9 @@ Claude, v0, etc are incredible—but you can't install packages, run backends or
   - Deploy to production from chat
   - Share your work via a URL
 
-- **AI with Environment Control**: Unlike traditional dev environments where the AI can only assist in code generation, Deep Tree Echo gives AI models **complete control** over the entire environment including the filesystem, node server, package manager, terminal, and browser console. This empowers AI agents to handle the entire app lifecycle—from creation to deployment.
+- **AI with Environment Control**: Unlike traditional dev environments where the AI can only assist in code generation, Deep Tree Echo gives AI models **complete control** over the entire  environment including the filesystem, node server, package manager, terminal, and browser console. This empowers AI agents to handle the entire app lifecycle—from creation to deployment.
 
-Whether you're an experienced developer, a PM or designer, Deep Tree Echo allows you to build production-grade full-stack applications with ease.
+Whether you’re an experienced developer, a PM or designer, Deep Tree Echo allows you to build production-grade full-stack applications with ease.
 
 For developers interested in building their own AI-powered development tools with WebContainers, check out the open-source Bolt codebase in this repo!
 
@@ -37,19 +37,19 @@ Here are some tips to get the most out of Deep Tree Echo:
 ## FAQs
 
 **Where do I sign up for a paid plan?**  
-Deep Tree Echo is free to get started. If you need more AI tokens or want private projects, you can purchase a paid subscription in your [Bolt.new](https://bolt.new) settings, in the lower-left-hand corner of the application.
+Deep Tree Echo is free to get started. If you need more AI tokens or want private projects, you can purchase a paid subscription in your [Deep Tree Echo](https://bolt.new) settings, in the lower-left hand corner of the application.
 
 **What happens if I hit the free usage limit?**  
 Once your free daily token limit is reached, AI interactions are paused until the next day or until you upgrade your plan.
 
-**Is Deep Tree Echo in beta?**
+**Is Bolt in beta?**  
 Yes, Deep Tree Echo is in beta, and we are actively improving it based on feedback.
 
-**How can I report Deep Tree Echo issues?**
+**How can I report Deep Tree Echo issues?**  
 Check out the [Issues section](https://github.com/stackblitz/bolt.new/issues) to report an issue or request a new feature. Please use the search feature to check if someone else has already submitted the same issue/request.
 
-**What frameworks/libraries currently work on Deep Tree Echo?**
+**What frameworks/libraries currently work on Bolt?**  
 Deep Tree Echo supports most popular JavaScript frameworks and libraries. If it runs on StackBlitz, it will run on Deep Tree Echo as well.
 
-**How can I make sure my framework or project works well in Deep Tree Echo?**
-We are excited to work with the JavaScript ecosystem to improve functionality in Deep Tree Echo. Reach out to us via [hello@stackblitz.com](mailto:hello@stackblitz.com) to discuss how we can partner!
+**How can I add make sure my framework/project works well in bolt?**  
+We are excited to work with the JavaScript ecosystem to improve functionality in Bolt. Reach out to us via [hello@stackblitz.com](mailto:hello@stackblitz.com) to discuss how we can partner!

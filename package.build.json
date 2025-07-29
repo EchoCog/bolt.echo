@@ -16,9 +16,9 @@
     "vite": "^5.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.15.1"
   },
   "scripts": {
-    "build": "remix vite:build && npx wrangler pages deploy ./build/client --project-name deep-tree-echo"
+    "build": "remix vite:build && pnpm wrangler pages deploy ./build/client --project-name bolt-echo"
   }
 }
