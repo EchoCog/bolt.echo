@@ -2,7 +2,7 @@
 # Build script for Cloudflare Pages
 
 # Run the standard build
-npm run build
+pnpm run build
 
 # Create the _worker.js file for Cloudflare Pages
 cat > build/client/_worker.js << 'EOF'
