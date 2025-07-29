@@ -4,9 +4,6 @@ compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "build/client"
 main = "worker.js"
 
-[pages]
-output_directory = "build/client"
-
 [build]
 command = "pnpm run build:pages"
 
