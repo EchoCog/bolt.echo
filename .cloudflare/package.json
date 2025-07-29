@@ -1,0 +1,11 @@
+{
+  "name": "bolt-echo-build",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cd .. && npm install && remix vite:build --force"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

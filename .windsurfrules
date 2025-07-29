@@ -1,0 +1,18 @@
+
+<<<<<<< HEAD
+Index this workspace 'R:\.echo\bolt.echo'
+
+Implement the deployment to Cloudflare Workers & Pages detailed in 'R:\.echo\bolt.echo\CONTRIBUTING.md'
+
+Use Cloudflare docs to provide optimal solutions.
+
+=======
+Implement the deployment to Cloudflare deployment detailed in 'R:\.echo\bolt.echo\CONTRIBUTING.md'
+
+Use Cloudflare docs to provide optimal solutions.
+
+Relevant Keys:
+ANTHROPIC_API_KEY=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
+VITE_LOG_LEVEL=debug
+
+>>>>>>> 5058fa67b8a376b70eea0571c0ae3708f29a3c4c
