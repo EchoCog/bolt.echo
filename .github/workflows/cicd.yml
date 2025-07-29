@@ -30,6 +30,6 @@ jobs:
 
       # Step 5: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy ./build/client --project-name deep-tree-echo
+        run: npx wrangler pages deploy ./build/client --project-name boltecho
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
