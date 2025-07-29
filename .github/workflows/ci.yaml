@@ -25,7 +25,7 @@ jobs:
         run: pnpm run lint
 
       - name: Wrangler Deploy
-        run: wrangler pages deploy
+        run: wrangler pages deploy ./build/client --project-name bolt-echo
 
 #  build:
 #    runs-on: ...
