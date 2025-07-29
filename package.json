@@ -3,7 +3,7 @@
     "description": "Deep Tree Echo AI Agent",
     "private": true,
     "license": "MIT",
-    "packageManager": "pnpm@latest",
+    "packageManager": "pnpm@9.4.0",
     "sideEffects": false,
     "type": "module",
     "scripts": {
