@@ -7,7 +7,7 @@
     "sideEffects": false,
     "type": "module",
     "scripts": {
-        "deploy": "pnpm run build:pages && wrangler pages deploy build/client --project-name bolt-echo",
+        "deploy": "pnpm run build:pages && npx wrangler pages deploy build/client --project-name bolt-echo",
         "build": "remix vite:build --force",
         "build:pages": "./build-pages.sh",
         "dev": "remix vite:dev",
@@ -15,7 +15,7 @@
         "test:watch": "vitest",
         "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
         "lint:fix": "pnpm run lint -- --fix",
-        "start": "pnpm run bindings && wrangler pages dev ./build/client",
+        "start": "pnpm run bindings && npx wrangler pages dev ./build/client",
         "typecheck": "tsc",
         "typegen": "wrangler types",
         "preview": "pnpm run build && pnpm run start",
