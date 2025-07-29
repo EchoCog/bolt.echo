@@ -12,3 +12,6 @@ command = "pnpm run build:pages"
 
 [env.production]
 name = "boltecho"
+
+# For Cloudflare Pages
+main = "functions/[[path]].ts"
