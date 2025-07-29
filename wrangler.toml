@@ -4,5 +4,8 @@ compatibility_flags = ["nodejs_compat"]
 main = "worker.js"
 pages_build_output_dir = "build/client"
 
+[build.upload]
+main = "worker.js"
+
 [env.production]
 name = "boltecho"
