@@ -44,4 +44,4 @@ jobs:
 
       # Step 6: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy ./build/client --project-name bolt-echo
+        run: npx wrangler pages deploy ./build/client --project-name deep-tree-echo
