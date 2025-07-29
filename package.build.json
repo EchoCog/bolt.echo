@@ -19,6 +19,6 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "remix vite:build && npx wrangler pages deploy ./build/client --project-name bolt-echo"
+    "build": "remix vite:build && npx wrangler pages deploy ./build/client --project-name deep-tree-echo"
   }
 }

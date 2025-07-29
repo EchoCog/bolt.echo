@@ -92,16 +92,16 @@ async function main() {
 
   // Only manage these specific workers
   const boltEchoWorkers = [
-    'bolt-echo',           // Main deployment
-    'bolt-echo-tail',      // Tail deployment
+    'deep-tree-echo',      // Main deployment
+    'deep-tree-echo-tail', // Tail deployment
     'marduk-bolt',         // Marduk integration
     'bolt-cog'            // Cog deployment
   ];
 
   // Define which ones to keep active
   const keepActiveWorkers = [
-    'bolt-echo',           // Main production worker
-    'bolt-echo-staging',   // Staging environment
+    'deep-tree-echo',           // Main production worker
+    'deep-tree-echo-staging',   // Staging environment
     'marduk-bolt',         // Keep Marduk integration
     'bolt-cog'            // Keep Cog deployment
   ];

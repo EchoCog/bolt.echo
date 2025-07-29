@@ -1,6 +1,6 @@
-name = "boltecho"
+name = "deep-tree-echo"
 compatibility_date = "2024-07-18"
 compatibility_flags = ["nodejs_compat"]
 
 [env.production]
-name = "boltecho"
+name = "deep-tree-echo"
