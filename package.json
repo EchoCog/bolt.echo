@@ -3,11 +3,11 @@
     "description": "Deep Tree Echo AI Agent",
     "private": true,
     "license": "MIT",
-    "packageManager": "pnpm@9.4.0",
+    "packageManager": "pnpm@latest",
     "sideEffects": false,
     "type": "module",
     "scripts": {
-        "deploy": "pnpm run build:pages && npx wrangler pages deploy build/client --project-name deep-tree-echo",
+        "deploy": "pnpm run build:pages && npx wrangler pages deploy build/client --project-name boltecho",
         "build": "remix vite:build --force",
         "build:pages": "./build-pages.sh",
         "dev": "remix vite:dev",
