@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd .cloudflare && npm run build",
+  "outputDirectory": "build/client",
+  "nodeVersion": "18.18.0",
+  "installCommand": "cd .cloudflare && npm install",
+  "framework": "remix"
+}
