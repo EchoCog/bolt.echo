@@ -1,7 +1,7 @@
-name = "deep-tree-echo"
+name = "boltecho"
 compatibility_date = "2024-07-18"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "build/client"
 
 [env.production]
-name = "deep-tree-echo"
+name = "boltecho"
