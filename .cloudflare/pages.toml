@@ -1,4 +1,0 @@
-[build]
-command = "npm install -g pnpm && pnpm install && pnpm run build"
-output_directory = "build/client"
-base_directory = "."

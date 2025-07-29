@@ -20,11 +20,11 @@ export async function encrypt(key: string, data: string) {
   bundle.set(new Uint8Array(ciphertext));
   bundle.set(iv, ciphertext.byteLength);
 
-  return decodeBase64(bundle);
+  return bytesToBase64(bundle);
 }
 
 export async function decrypt(key: string, payload: string) {
-  const bundle = encodeBase64(payload);
+  const bundle = base64ToBytes(payload);
 
   const iv = new Uint8Array(bundle.buffer, bundle.byteLength - IV_LENGTH);
   const ciphertext = new Uint8Array(bundle.buffer, 0, bundle.byteLength - IV_LENGTH);
@@ -44,15 +44,15 @@ export async function decrypt(key: string, payload: string) {
 }
 
 async function getKey(key: string) {
-  return await crypto.subtle.importKey('raw', encodeBase64(key), { name: 'AES-CBC' }, false, ['encrypt', 'decrypt']);
+  return await crypto.subtle.importKey('raw', base64ToBytes(key), { name: 'AES-CBC' }, false, ['encrypt', 'decrypt']);
 }
 
-function decodeBase64(encoded: Uint8Array) {
+function bytesToBase64(encoded: Uint8Array) {
   const byteChars = Array.from(encoded, (byte) => String.fromCodePoint(byte));
 
   return btoa(byteChars.join(''));
 }
 
-function encodeBase64(data: string) {
+function base64ToBytes(data: string) {
   return Uint8Array.from(atob(data), (ch) => ch.codePointAt(0)!);
 }

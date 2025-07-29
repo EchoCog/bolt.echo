@@ -55,5 +55,4 @@ jobs:
 
       # Step 5: Deploy to Pages
       - name: Deploy to Cloudflare Pages
-        run: wrangler pages deploy ./build/client
- #       run: npx wrangler pages deploy ./build/client
+        run: wrangler pages deploy ./build/client --project-name bolt-echo

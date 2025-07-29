@@ -1,31 +1,43 @@
+// Z-Index Scale: Semantic layering system
+// Base layers (0-99): content, text, images
+// UI layers (100-899): interface elements, menus, dropdowns  
+// Overlay layers (900-999): modals, tooltips, notifications
+
+// Z-Index variables for semantic layering
+$z-base: 1;
+$z-content: 10;
+$z-ui-low: 100;
+$z-ui-mid: 500;
+$z-ui-high: 800;
+$z-overlay: 900;
+$z-modal: 950;
+$z-tooltip: 990;
 $zIndexMax: 999;
 
-.z-logo {
-  z-index: $zIndexMax - 1;
-}
-
-.z-sidebar {
-  z-index: $zIndexMax - 2;
-}
-
-.z-port-dropdown {
-  z-index: $zIndexMax - 3;
-}
-
-.z-iframe-overlay {
-  z-index: $zIndexMax - 4;
+// Semantic z-index assignments
+.z-workbench {
+  z-index: $z-content;
 }
 
 .z-prompt {
-  z-index: 2;
+  z-index: $z-content + 1;
 }
 
-.z-workbench {
-  z-index: 3;
+.z-iframe-overlay {
+  z-index: $z-ui-high;
 }
 
+.z-port-dropdown {
+  z-index: $z-ui-high + 10;
+}
+
+.z-sidebar {
+  z-index: $z-ui-high + 20;
+}
+
+.z-logo,
 .z-file-tree-breadcrumb {
-  z-index: $zIndexMax - 1;
+  z-index: $z-ui-high + 30;
 }
 
 .z-max {

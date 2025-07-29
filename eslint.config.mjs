@@ -28,7 +28,7 @@ export default [
   },
   {
     files: [...tsFileExtensions, ...jsFileExtensions, '**/*.tsx'],
-    ignores: ['functions/*'],
+    ignores: ['functions/*', 'functions-src/*'],
     rules: {
       'no-restricted-imports': [
         'error',

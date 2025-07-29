@@ -138,10 +138,15 @@ export class FilesStore {
         case 'remove_dir': {
           this.files.setKey(sanitizedPath, undefined);
 
-          for (const [direntPath] of Object.entries(this.files)) {
-            if (direntPath.startsWith(sanitizedPath)) {
-              this.files.setKey(direntPath, undefined);
+          const filesState = this.files.get();
+          if (typeof filesState === 'object' && filesState !== null) {
+            for (const [direntPath] of Object.entries(filesState)) {
+              if (direntPath.startsWith(sanitizedPath)) {
+                this.files.setKey(direntPath, undefined);
+              }
             }
+          } else {
+            logger.error('Unexpected state in this.files: expected a plain object.', { filesState });
           }
 
           break;

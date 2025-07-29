@@ -1,14 +1,14 @@
 import { defineConfig } from 'unocss';
 
 export default defineConfig({
-  // UnoCSS configuration
+  // unocss configuration
   shortcuts: [
-    // Add your shortcuts here
+    // add your shortcuts here
   ],
   theme: {
-    // Add your theme customizations here
+    // add your theme customizations here
   },
   rules: [
-    // Add your custom rules here
-  ]
+    // add your custom rules here
+  ],
 });

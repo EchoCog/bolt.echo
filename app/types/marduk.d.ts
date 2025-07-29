@@ -1,10 +1,10 @@
-// Types for Marduk integration
+// types for Marduk integration
 export interface MardukAgent {
   id: string;
   arena: string;
   namespace: string;
   relations: {
-    [key: string]: Function;
+    [key: string]: (...args: any[]) => any;
   };
 }
 
@@ -21,7 +21,7 @@ export interface MardukRelation {
   rules: any[];
 }
 
-// Recursive pattern types
+// recursive pattern types
 export interface RecursiveNamespace {
   path: string[];
   arena: string;

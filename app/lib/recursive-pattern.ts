@@ -1,50 +1,50 @@
-import type { MardukDaemon } from '../types/marduk';
-
 interface RecursiveAgent {
   id: string;
   namespace: string;
   arena: string;
-  relations: Map<string, Function>;
+  relations: Map<string, (...args: any[]) => any>;
 }
 
 export class RecursivePattern {
-  private agents: Map<string, RecursiveAgent>;
-  private arenas: Set<string>;
-  
+  private _agents: Map<string, RecursiveAgent>;
+  private _arenas: Set<string>;
+
   constructor() {
-    this.agents = new Map();
-    this.arenas = new Set(['ElizaOS', 'bolt.echo', 'app']);
+    this._agents = new Map();
+    this._arenas = new Set(['ElizaOS', 'bolt.echo', 'app']);
   }
 
   registerAgent(agent: RecursiveAgent) {
-    if (!this.arenas.has(agent.arena)) {
+    if (!this._arenas.has(agent.arena)) {
       throw new Error(`Arena ${agent.arena} not recognized`);
     }
-    this.agents.set(agent.id, agent);
+
+    this._agents.set(agent.id, agent);
   }
 
-  // Recursive namespace resolution following Marduk pattern
+  // recursive namespace resolution following Marduk pattern
   resolveNamespace(path: string[]): string {
     return path.reduce((ns, segment) => {
-      const agent = this.agents.get(segment);
+      const agent = this._agents.get(segment);
+
       if (agent) {
         return `${ns}/${agent.namespace}`;
       }
+
       return `${ns}/${segment}`;
     }, '');
   }
 
-  // Arena boundary enforcement
+  // arena boundary enforcement
   validateBoundary(agent: string, target: string): boolean {
-    const sourceAgent = this.agents.get(agent);
-    const targetAgent = this.agents.get(target);
-    
+    const sourceAgent = this._agents.get(agent);
+    const targetAgent = this._agents.get(target);
+
     if (!sourceAgent || !targetAgent) {
       return false;
     }
 
-    // Check if target is in allowed arena
-    return sourceAgent.arena === targetAgent.arena || 
-           this.arenas.has(targetAgent.arena);
+    // check if target is in allowed arena
+    return sourceAgent.arena === targetAgent.arena || this._arenas.has(targetAgent.arena);
   }
 }

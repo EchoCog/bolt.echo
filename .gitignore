@@ -25,8 +25,12 @@ dist-ssr
 /.cache
 /build
 .env*
+!.env.example
 *.vars
 .wrangler
 _worker.bundle
+
+# Vite timestamp files
+.viteconfig/*.timestamp-*
 
 .windsurfrules
