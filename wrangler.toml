@@ -1,7 +1,8 @@
 name = "boltecho"
-compatibility_date = "2024-07-18"
+compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "build/client"
+main = "worker.js"
 
 [pages]
 output_directory = "build/client"
@@ -11,3 +12,6 @@ command = "pnpm run build:pages"
 
 [env.production]
 name = "boltecho"
+
+# For Cloudflare Pages
+main = "functions/[[path]].ts"
