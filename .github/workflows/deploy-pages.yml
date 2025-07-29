@@ -20,11 +20,11 @@ jobs:
     steps:
       # Step 1: Checkout Repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set Up Node.js
       - name: Set Up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 #        with:
 #          node-version: 18
 
@@ -55,4 +55,4 @@ jobs:
 
       # Step 5: Deploy to Pages
       - name: Deploy to Cloudflare Pages
-        run: wrangler pages deploy ./build/client --project-name deep-tree-echo
+        run: wrangler pages deploy ./build/client --project-name boltecho
