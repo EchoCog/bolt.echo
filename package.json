@@ -25,7 +25,7 @@
         "setup:pnpm": "node setup-pnpm.js"
     },
     "engines": {
-        "node": ">=18.18.0"
+        "node": ""
     },
     "dependencies": {
         "@ai-sdk/anthropic": "^0.0.39",
@@ -59,8 +59,8 @@
         "@xterm/addon-fit": "0.10.0",
         "@xterm/addon-web-links": "0.11.0",
         "@xterm/xterm": "5.5.0",
-        "ai": "3.3.4",
-        "cloudflare": "3.5.0",
+        "ai": "",
+        "cloudflare": "",
         "date-fns": "3.6.0",
         "diff": "5.2.0",
         "dompurify": "3.2.4",
@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "@blitz/eslint-plugin": "0.1.0",
-        "@cloudflare/workers-types": "4.20240620.0",
+        "@cloudflare/workers-types": "",
         "@remix-run/dev": "2.10.0",
         "@types/diff": "5.2.1",
         "@types/node": "22.10.4",
@@ -106,7 +106,7 @@
         "vite-plugin-optimize-css-modules": "1.1.0",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "2.1.9",
-        "wrangler": "4.25.0",
+        "wrangler": "",
         "zod": "3.23.8"
     },
     "resolutions": {
