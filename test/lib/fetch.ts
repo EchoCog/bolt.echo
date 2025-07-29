@@ -7,8 +7,7 @@ export async function request(url: string, init?: CommonRequest) {
 
     const agent = url.startsWith('https') 
       ? new https.Agent({ 
-          rejectUnauthorized: true, 
-          ca: import.meta.env.DEV ? await import('fs').promises.readFile('./path/to/dev-cert.pem') : undefined 
+          rejectUnauthorized: false // Allow self-signed certificates in development
         }) 
       : undefined;
 
