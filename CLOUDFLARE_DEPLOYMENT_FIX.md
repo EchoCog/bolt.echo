@@ -48,6 +48,7 @@ npx wrangler pages deploy build/client --project-name boltecho
 The following files have been updated:
 
 1. **package.json**: Updated wrangler to version 4.25.0
+2. **wrangler.toml**: Added `main = "worker.js"` entry point
 
 ### 5. Alternative: GitHub Actions Deployment
 
