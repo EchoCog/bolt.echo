@@ -39,12 +39,20 @@ jobs:
 
       # Step 4: Install Dependencies
       - name: Install Dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
-      # Step 5: Build Project
+      # Step 5: Install Wrangler CLI (v4)
+      - name: Install Wrangler
+        run: pnpm add -g wrangler@4
+
+      # Step 6: Build Project
       - name: Build Project
-        run: npm run build:pages
+        run: pnpm run build:pages
 
-      # Step 6: Deploy to Cloudflare Pages
+      # Step 7: Verify build output exists
+      - name: Verify Build Output
+        run: test -d build/client && echo "✅ Build output found"
+
+      # Step 8: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy ./build/client --project-name boltecho
+        run: wrangler pages deploy ./build/client --project-name boltecho

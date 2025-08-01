@@ -7,7 +7,7 @@
     "sideEffects": false,
     "type": "module",
     "scripts": {
-        "deploy": "pnpm run build:pages && npx wrangler pages deploy build/client --project-name boltecho --compatibility-date=2024-12-01",
+        "deploy": "pnpm run build:pages && wrangler pages deploy build/client --project-name boltecho",
         "build": "remix vite:build --force",
         "build:pages": "./build-pages.sh",
         "dev": "remix vite:dev",
@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "@blitz/eslint-plugin": "0.1.0",
-        "@cloudflare/workers-types": "^4.20250726.0",
+        "@cloudflare/workers-types": "^4.20250801.0",
         "@remix-run/dev": "2.10.0",
         "@types/diff": "5.2.1",
         "@types/node": "22.10.4",
@@ -106,7 +106,7 @@
         "vite-plugin-optimize-css-modules": "1.1.0",
         "vite-tsconfig-paths": "4.3.2",
         "vitest": "2.1.9",
-        "wrangler": "4.25.0",
+        "wrangler": "4.27.0",
         "zod": "3.23.8"
     },
     "resolutions": {

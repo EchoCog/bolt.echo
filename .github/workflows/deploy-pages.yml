@@ -25,34 +25,31 @@ jobs:
       # Step 2: Set Up Node.js
       - name: Set Up Node.js
         uses: actions/setup-node@v4
-#        with:
-#          node-version: 18
+        with:
+          node-version: 20
 
+      # Step 3: Setup pnpm
       - name: Setup pnpm
-  # You may pin to the exact commit or the version.
-  # uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2
-        uses: pnpm/action-setup@v4.0.0
-#        with:
-          # Version of pnpm to install
-#          version: # optional
-          # Where to store pnpm files
-#          dest: # optional, default is ~/setup-pnpm
-    # If specified, run `pnpm install`
-#          run_install: # optional, default is null
-    # File path to the package.json to read "packageManager" configuration
-#          package_json_file: # optional, default is package.json
-    # When set to true, @pnpm/exe, which is a Node.js bundled package, will be installed, enabling using pnpm without Node.js.
-#          standalone: # optional, default is false
-          
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
 
-      # Step 3: Install Dependencies
+      # Step 4: Install Dependencies
       - name: Install Dependencies
-        run: pnpm install -g wrangler && pnpm install
+        run: pnpm install --frozen-lockfile
 
-      # Step 4: Build Project
+      # Step 5: Install Wrangler CLI v4
+      - name: Install Wrangler
+        run: pnpm add -g wrangler@4
+
+      # Step 6: Build Project for Pages
       - name: Build Project
-        run: pnpm run build
+        run: pnpm run build:pages
 
-      # Step 5: Deploy to Pages
+      # Step 7: Verify build output directory exists
+      - name: Verify Build Output
+        run: test -d build/client && echo "✅ Build output found"
+
+      # Step 8: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
-        run: wrangler pages deploy ./build/client --project-name boltecho
+        run: wrangler pages deploy build/client --project-name boltecho
