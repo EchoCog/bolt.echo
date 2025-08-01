@@ -13,8 +13,9 @@ This document captures **everything you need** to ship `bolt.echo` to **Cloudfla
 | 3 | Mixed Pages/Workers config in `wrangler.toml`. | Simplified: removed `main`, added `[pages]`, `pages_build_output_dir`, and centralised build command. |
 | 4 | Pages build used **npm** instead of **pnpm**. | Updated `.cloudflare/pages.toml` to `corepack enable && pnpm install --frozen-lockfile && pnpm run build:pages`. |
 | 5 | GitHub Actions used Node 18, missing pnpm setup, and old wrangler. | New workflow installs Node 20, pnpm 9.4, Wrangler 4, then builds and deploys. |
-| 6 | No reproducible local test. | Added `deploy-test.sh` to lint toolchain, build, validate artefacts & config. |
-| 7 | Large client chunks warning. | Left as optimisation note; does **not** block deployment. |
+| 6 | **Peer-dependency conflict**: `@remix-run/dev` expected Wrangler `^3.x`, causing *ELSPROBLEMS* on npm. | Added a **`resolutions`** field in `package.json` to pin **Wrangler 4.27.0** and re-installed deps. |
+| 7 | No reproducible local test. | Added `deploy-test.sh` to lint toolchain, build, validate artefacts & config. |
+| 8 | Large client chunks warning. | Left as optimisation note; does **not** block deployment. |
 
 All fixes have been validated via local builds and the **deploy-test** script.
 
@@ -96,6 +97,7 @@ wrangler pages deploy build/client --project-name boltecho --branch my-feature
 |---------|--------------|-----|
 | `Missing entry-point` | Old Wrangler v3 | `pnpm i -D wrangler@latest` |
 | `wrangler: unknown argument dry-run` | `--dry-run` not supported | Remove flag (use preview branch for test) |
+| `npm ERR! ELSPROBLEMS wrangler invalid` | Peer-dependency clash (`wrangler@3` expected) | Added `"resolutions": {"wrangler":"4.27.0"}` and re-ran `pnpm install` |
 | Build fails on Pages with `pnpm` not found | `pages.toml` missing `corepack enable` | Ensure config snippet above is present |
 | 403 Unauthorized | Token missing or wrong scope | Regenerate API token with **Pages Write** & **Account Workers Write** |
 | Large JS chunks warning | Bundle size > 500 kB | Add dynamic `import()` or manual chunking (optional) |
