@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@typescript-eslint/utils': 8.0.0-alpha.30
+  wrangler: 4.27.0
 
 importers:
 
@@ -1996,7 +1997,7 @@ packages:
       '@remix-run/serve': ^2.10.0
       typescript: ^5.1.0
       vite: ^5.1.0
-      wrangler: ^3.28.2
+      wrangler: 4.27.0
     peerDependenciesMeta:
       '@remix-run/serve':
         optional: true
