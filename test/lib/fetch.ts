@@ -5,10 +5,10 @@ export async function request(url: string, init?: CommonRequest) {
     const nodeFetch = await import('node-fetch');
     const https = await import('node:https');
 
-    const agent = url.startsWith('https') 
-      ? new https.Agent({ 
-          rejectUnauthorized: false // Allow self-signed certificates in development
-        }) 
+    const agent = url.startsWith('https')
+      ? new https.Agent({
+          rejectUnauthorized: false, // allow self-signed certificates in development
+        })
       : undefined;
 
     return nodeFetch.default(url, { ...init, agent });

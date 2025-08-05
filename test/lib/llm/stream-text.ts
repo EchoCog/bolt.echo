@@ -14,7 +14,7 @@ interface ToolResult<Name extends string, Args, Result> {
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  toolInvocations?: { state: "result" } & ToolResult<string, unknown, unknown>[];
+  toolInvocations?: { state: 'result' } & ToolResult<string, unknown, unknown>[];
 }
 
 export type Messages = Message[];

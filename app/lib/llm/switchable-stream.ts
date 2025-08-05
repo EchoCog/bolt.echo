@@ -59,7 +59,7 @@ export default class SwitchableStream extends TransformStream {
       this._currentReader.cancel();
     }
 
-    this._controller?.close();
+    this._controller?.terminate();
   }
 
   get switches() {

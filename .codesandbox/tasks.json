@@ -1,5 +1,6 @@
 {
-  // These tasks will run in order when initializing your CodeSandbox project.
+
+  // these tasks will run in order when initializing your codesandbox project
   "setupTasks": [
     {
       "command": "npm install",
@@ -7,7 +8,7 @@
     }
   ],
 
-  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  // these tasks can be run from codesandbox. running one will open a log in the app
   "tasks": {
     "deploy": {
       "name": "deploy",
