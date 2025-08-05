@@ -139,6 +139,7 @@ export class FilesStore {
           this.files.setKey(sanitizedPath, undefined);
 
           const filesState = this.files.get();
+
           if (typeof filesState === 'object' && filesState !== null) {
             for (const [direntPath] of Object.entries(filesState)) {
               if (direntPath.startsWith(sanitizedPath)) {
