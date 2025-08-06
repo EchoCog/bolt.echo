@@ -38,7 +38,7 @@ export function HistoryItem({ item, onDelete }: HistoryItemProps) {
   return (
     <div
       ref={hoverRef}
-      className="group rounded-md text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-3 overflow-hidden flex justify-between items-center px-2 py-1"
+              className="group rounded-md text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-bg-depth-3 overflow-hidden flex justify-between items-center px-2 py-1"
     >
       <a href={`/chat/${item.urlId}`} className="flex w-full relative truncate block">
         {item.description}

@@ -198,7 +198,7 @@ export const EditorPanel = memo(
         >
           <div className="h-full">
             <div className="bg-bolt-elements-terminals-background h-full flex flex-col">
-              <div className="flex items-center bg-bolt-elements-background-depth-2 border-y border-bolt-elements-borderColor gap-1.5 min-h-[34px] p-2">
+              <div className="flex items-center bg-bolt-elements-bg-depth-2 border-y border-bolt-elements-borderColor gap-1.5 min-h-[34px] p-2">
                 {Array.from({ length: terminalCount }, (_, index) => {
                   const isActive = activeTerminal === index;
 
@@ -209,7 +209,7 @@ export const EditorPanel = memo(
                         'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full',
                         {
                           'bg-bolt-elements-terminals-buttonBackground text-bolt-elements-textPrimary': isActive,
-                          'bg-bolt-elements-background-depth-2 text-bolt-elements-textSecondary hover:bg-bolt-elements-terminals-buttonBackground':
+                          'bg-bolt-elements-bg-depth-2 text-bolt-elements-textSecondary hover:bg-bolt-elements-terminals-buttonBackground':
                             !isActive,
                         },
                       )}
