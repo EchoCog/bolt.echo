@@ -13,11 +13,12 @@ export const DEFAULT_THEME = 'light';
 export const themeStore = atom<Theme>(initStore());
 
 function initStore() {
-  if (!import.meta.env.SSR) {
+  if (typeof window !== 'undefined') {
     const persistedTheme = localStorage.getItem(kTheme) as Theme | undefined;
     const themeAttribute = document.querySelector('html')?.getAttribute('data-theme');
-
-    return persistedTheme ?? (themeAttribute as Theme) ?? DEFAULT_THEME;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    return persistedTheme ?? (themeAttribute as Theme) ?? (systemPrefersDark ? 'dark' : 'light');
   }
 
   return DEFAULT_THEME;
@@ -29,7 +30,17 @@ export function toggleTheme() {
 
   themeStore.set(newTheme);
 
-  localStorage.setItem(kTheme, newTheme);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(kTheme, newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  }
+}
 
-  document.querySelector('html')?.setAttribute('data-theme', newTheme);
+export function setTheme(theme: Theme) {
+  themeStore.set(theme);
+  
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(kTheme, theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }
 }
