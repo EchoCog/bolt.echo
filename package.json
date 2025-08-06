@@ -13,6 +13,7 @@
     "dev": "remix vite:dev",
     "test": "vitest --run",
     "test:watch": "vitest",
+    "test:deployment": "./scripts/test-deployment.sh",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "pnpm run lint -- --fix",
     "start": "pnpm run bindings && npx wrangler pages dev ./build/client",

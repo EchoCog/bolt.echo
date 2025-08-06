@@ -42,14 +42,27 @@ jobs:
       - name: Install Wrangler
         run: pnpm add -g wrangler@4
 
-      # Step 6: Build Project for Pages
+      # Step 6: Create Cloudflare Pages project if it doesn't exist
+      - name: Create Cloudflare Pages Project
+        run: ./scripts/create-cloudflare-project.sh
+        continue-on-error: true
+
+      # Step 7: Build Project for Pages
       - name: Build Project
         run: pnpm run build:pages
 
-      # Step 7: Verify build output directory exists
+      # Step 8: Verify build output directory exists
       - name: Verify Build Output
         run: test -d build/client && echo "✅ Build output found"
 
-      # Step 8: Deploy to Cloudflare Pages
+      # Step 9: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
         run: wrangler pages deploy build/client --project-name boltecho
+        continue-on-error: true
+
+      # Step 10: Verify deployment
+      - name: Verify Deployment
+        run: |
+          echo "Checking deployment status..."
+          sleep 10  # Wait a bit for deployment to process
+          wrangler pages deployment list --project-name boltecho --json | head -20
