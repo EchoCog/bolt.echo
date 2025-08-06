@@ -6,9 +6,6 @@ pages_build_output_dir = "build/client"
 [pages]
 output_directory = "build/client"
 
-[build]
-command = "pnpm run build:pages"
-
 [env.production]
 name = "boltecho"
 
