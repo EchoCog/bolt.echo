@@ -51,9 +51,14 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
   } catch (error) {
     console.log(error);
 
-    throw new Response(null, {
-      status: 500,
-      statusText: 'Internal Server Error',
+    // Graceful fallback: never fail the app; stream a minimal response
+    stream.switchToText('Operating in fallback mode. Basic response only.');
+
+    return new Response(stream.readable, {
+      status: 200,
+      headers: {
+        contentType: 'text/plain; charset=utf-8',
+      },
     });
   }
 }

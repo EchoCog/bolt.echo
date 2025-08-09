@@ -5,8 +5,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "electron .",
-    "start": "electron ."
+    "dev": "node ./node_modules/.pnpm/electron@31.3.1/node_modules/electron/cli.js .",
+    "start": "node ./node_modules/.pnpm/electron@31.3.1/node_modules/electron/cli.js ."
   },
   "dependencies": {
     "electron-store": "9.0.0",

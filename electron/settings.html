@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Settings</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 16px; }
+      label { display: block; margin-top: 10px; font-weight: 600; }
+      input { width: 100%; padding: 6px 8px; margin-top: 4px; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .actions { margin-top: 16px; display: flex; gap: 8px; justify-content: flex-end; }
+    </style>
+  </head>
+  <body>
+    <h2>Settings</h2>
+
+    <label>Anthropic API Key
+      <input id="anthropicKey" type="password" placeholder="sk-ant-..." />
+    </label>
+
+    <h3 style="margin-top:16px">Local llama.cpp</h3>
+    <label>
+      Enabled
+      <input id="llamaEnabled" type="checkbox" />
+    </label>
+    <label>Binary Path
+      <input id="llamaBinary" placeholder="C:\\path\\to\\llama.exe" />
+    </label>
+    <label>Model Path (gguf)
+      <input id="llamaModel" placeholder="C:\\path\\to\\tiny-model.gguf" />
+    </label>
+    <div class="row">
+      <label>Port
+        <input id="llamaPort" type="number" value="8791" />
+      </label>
+      <label>Context Size
+        <input id="llamaCtx" type="number" value="2048" />
+      </label>
+    </div>
+    <label>n-gpu-layers (0 for CPU)
+      <input id="llamaGpu" type="number" value="0" />
+    </label>
+
+    <div class="actions">
+      <button id="save">Save</button>
+      <button id="close">Close</button>
+    </div>
+
+    <script>
+      async function load() {
+        try {
+          const resp = await fetch('http://localhost:8788/api.local/settings');
+          const data = await resp.json();
+          document.getElementById('llamaEnabled').checked = !!(data.llama?.enabled ?? true);
+          document.getElementById('llamaBinary').value = data.llama?.binaryPath || '';
+          document.getElementById('llamaModel').value = data.llama?.modelPath || '';
+          document.getElementById('llamaPort').value = data.llama?.port || 8791;
+          document.getElementById('llamaCtx').value = data.llama?.ctx || 2048;
+          document.getElementById('llamaGpu').value = data.llama?.nGpuLayers || 0;
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      load();
+
+      document.getElementById('save').onclick = async () => {
+        const anthropicKey = document.getElementById('anthropicKey').value;
+        const llama = {
+          enabled: document.getElementById('llamaEnabled').checked,
+          binaryPath: document.getElementById('llamaBinary').value,
+          modelPath: document.getElementById('llamaModel').value,
+          port: Number(document.getElementById('llamaPort').value || 8791),
+          ctx: Number(document.getElementById('llamaCtx').value || 2048),
+          nGpuLayers: Number(document.getElementById('llamaGpu').value || 0),
+        };
+        await fetch('http://localhost:8788/api.local/settings', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ anthropicKey, llama }),
+        });
+        alert('Saved');
+      };
+      document.getElementById('close').onclick = () => window.close();
+    </script>
+  </body>
+  </html>
+
+

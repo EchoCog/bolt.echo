@@ -11,7 +11,7 @@
     "build": "remix vite:build --force",
     "build:pages": "./build-pages.sh",
     "dev": "remix vite:dev",
-    "dev:shell": "cross-env BOLTECHO_URL=http://localhost:5174 pnpm -C electron dev",
+    "dev:shell": "pnpm -C electron dev",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:deployment": "./scripts/test-deployment.sh",
