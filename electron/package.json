@@ -5,8 +5,8 @@
   "main": "../build/electron/main/index.mjs",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development electron --no-sandbox .",
-    "start": "NODE_ENV=production electron --no-sandbox ."
+    "dev": "cross-env NODE_ENV=development electron --no-sandbox .",
+    "start": "cross-env NODE_ENV=production electron --no-sandbox ."
   },
   "dependencies": {
     "electron-log": "^5.4.2",
@@ -16,6 +16,7 @@
     "mime": "^4.0.7"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "electron": "28.3.3"
   }
 }
