@@ -1,6 +1,9 @@
 {
   "name": "bolt.echo",
+  "version": "0.1.0",
   "description": "Deep Tree Echo AI Agent",
+  "author": "Bolt Echo Team",
+  "main": "build/electron/main/index.mjs",
   "private": true,
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
@@ -106,6 +109,7 @@
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "4.3.4",
     "cross-env": "7.0.3",
+    "electron": "^28.3.3",
     "electron-builder": "25.1.8",
     "fast-glob": "3.3.2",
     "is-ci": "3.0.1",
@@ -126,5 +130,35 @@
   },
   "resolutions": {
     "@typescript-eslint/utils": "8.0.0-alpha.30"
+  },
+  "build": {
+    "appId": "com.boltecho.app",
+    "productName": "Bolt Echo",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "build/**/*",
+      "electron/*.html",
+      "electron/*.js",
+      "electron/package.json",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icons/icon.png"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
