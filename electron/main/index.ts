@@ -102,7 +102,7 @@ declare global {
       }
 
       // Always try to serve asset first
-      const assetPath = path.join(app.getAppPath(), 'build', 'client');
+      const assetPath = path.join(app.getAppPath(), '..', 'build', 'client');
       const res = await serveAsset(req, assetPath);
 
       if (res) {

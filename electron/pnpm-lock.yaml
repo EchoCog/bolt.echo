@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      electron-log:
+        specifier: ^5.4.2
+        version: 5.4.2
       electron-store:
         specifier: 9.0.0
         version: 9.0.0
@@ -212,6 +215,10 @@ packages:
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+
+  electron-log@5.4.2:
+    resolution: {integrity: sha512-L55kJzbVVoBY6kyJ3A+cjPchL1aXLdV2/Q8SvIj4sE5VmOcwZa6KXaFICZE+Z+RMXhAIFta79kSaXBqn+0XXMA==}
+    engines: {node: '>= 14'}
 
   electron-store@9.0.0:
     resolution: {integrity: sha512-7LZ2dR3N3bF93G2c4x+1NZ/8fpsKv6bKrMxeOQWLqdRbxvopxVqy9QXQy9axSV2O3P1kVGTj1q2wq5/W4isiOg==}
@@ -939,6 +946,8 @@ snapshots:
       gopd: 1.2.0
 
   ee-first@1.1.1: {}
+
+  electron-log@5.4.2: {}
 
   electron-store@9.0.0:
     dependencies:
