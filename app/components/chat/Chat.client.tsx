@@ -92,14 +92,9 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
           try {
             const payload = JSON.parse(String(body || '{}'));
             const result = await (window as any).shell.llmStream(payload);
-            // Adapt to useChat expected streaming shape by returning a Response-like object
-            return new Response(JSON.stringify(result), {
-              headers: { 'content-type': 'application/json' },
-            });
+            return new Response(JSON.stringify(result), { headers: { 'content-type': 'application/json' } });
           } catch (e) {
-            return new Response(JSON.stringify({ role: 'assistant', content: 'OK.' }), {
-              headers: { 'content-type': 'application/json' },
-            });
+            return new Response(JSON.stringify({ id: Date.now().toString(), role: 'assistant', content: 'OK.' }), { headers: { 'content-type': 'application/json' } });
           }
         }
       : undefined,

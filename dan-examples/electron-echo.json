@@ -1,0 +1,27 @@
+{
+  "name": "elechtro",
+  "scripts": {
+    "electron:build:deps": "concurrently \"pnpm electron:build:main\" \"pnpm electron:build:preload\" --kill-others-on-fail",
+    "electron:build:main": "node --max-old-space-size=8192 ./node_modules/vite/bin/vite.js build --config ./electron/main/vite.config.ts",
+    "electron:build:preload": "node --max-old-space-size=8192 ./node_modules/vite/bin/vite.js build --config ./electron/preload/vite.config.ts",
+    "electron:build:renderer": "node --max-old-space-size=8192 ./node_modules/@remix-run/dev/dist/cli.js vite:build --config vite-electron.config.ts",
+    "electron:build:unpack": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --dir",
+    "electron:build:mac": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --mac",
+    "electron:build:win": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --win",
+    "electron:build:linux": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --linux",
+    "electron:build:dist": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --mwl"
+  },
+  "engines": {
+    "node": ""
+  },
+  "dependencies": {
+    "electron-log": "",
+    "electron-store": "",
+    "electron-updater": ""
+  },
+  "devDependencies": {
+    "@electron/notarize": "",
+    "electron": "",
+    "electron-builder": ""
+  }
+}

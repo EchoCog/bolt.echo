@@ -50,14 +50,13 @@
     <script>
       async function load() {
         try {
-          const resp = await fetch('http://localhost:8788/api.local/settings');
-          const data = await resp.json();
-          document.getElementById('llamaEnabled').checked = !!(data.llama?.enabled ?? true);
-          document.getElementById('llamaBinary').value = data.llama?.binaryPath || '';
-          document.getElementById('llamaModel').value = data.llama?.modelPath || '';
-          document.getElementById('llamaPort').value = data.llama?.port || 8791;
-          document.getElementById('llamaCtx').value = data.llama?.ctx || 2048;
-          document.getElementById('llamaGpu').value = data.llama?.nGpuLayers || 0;
+          const get = (k) => window.shell.getSetting(k);
+          document.getElementById('llamaEnabled').checked = !!(await get('llama.enabled')) ?? true;
+          document.getElementById('llamaBinary').value = (await get('llama.binaryPath')) || '';
+          document.getElementById('llamaModel').value = (await get('llama.modelPath')) || '';
+          document.getElementById('llamaPort').value = (await get('llama.port')) || 8791;
+          document.getElementById('llamaCtx').value = (await get('llama.ctx')) || 2048;
+          document.getElementById('llamaGpu').value = (await get('llama.nGpuLayers')) || 0;
         } catch (e) {
           console.warn(e);
         }
@@ -66,19 +65,15 @@
 
       document.getElementById('save').onclick = async () => {
         const anthropicKey = document.getElementById('anthropicKey').value;
-        const llama = {
-          enabled: document.getElementById('llamaEnabled').checked,
-          binaryPath: document.getElementById('llamaBinary').value,
-          modelPath: document.getElementById('llamaModel').value,
-          port: Number(document.getElementById('llamaPort').value || 8791),
-          ctx: Number(document.getElementById('llamaCtx').value || 2048),
-          nGpuLayers: Number(document.getElementById('llamaGpu').value || 0),
-        };
-        await fetch('http://localhost:8788/api.local/settings', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ anthropicKey, llama }),
-        });
+        if (anthropicKey) await window.shell.setSecret('ANTHROPIC_API_KEY', anthropicKey);
+
+        const set = (k, v) => window.shell.setSetting(k, v);
+        await set('llama.enabled', document.getElementById('llamaEnabled').checked);
+        await set('llama.binaryPath', document.getElementById('llamaBinary').value);
+        await set('llama.modelPath', document.getElementById('llamaModel').value);
+        await set('llama.port', Number(document.getElementById('llamaPort').value || 8791));
+        await set('llama.ctx', Number(document.getElementById('llamaCtx').value || 2048));
+        await set('llama.nGpuLayers', Number(document.getElementById('llamaGpu').value || 0));
         alert('Saved');
       };
       document.getElementById('close').onclick = () => window.close();

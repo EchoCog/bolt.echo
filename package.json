@@ -21,6 +21,11 @@
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "pnpm run build && pnpm run start",
+    "electron:build:renderer": "pnpm build",
+    "electron:build:main": "node --max-old-space-size=8192 ./node_modules/vite/bin/vite.js build --config ./electron/main/vite.config.ts",
+    "electron:build:preload": "node --max-old-space-size=8192 ./node_modules/vite/bin/vite.js build --config ./electron/preload/vite.config.ts",
+    "electron:build:deps": "pnpm electron:build:main && pnpm electron:build:preload",
+    "electron:build:win": "rimraf dist && pnpm electron:build:renderer && pnpm electron:build:deps && node --max-old-space-size=8192 ./node_modules/electron-builder/out/cli/cli.js --win",
     "bindings": "./bindings.sh",
     "migrate-sass": "npx sass-migrator import .",
     "cleanup:npm": "rm -rf node_modules package-lock.json && pnpm install",
@@ -87,6 +92,8 @@
     "unist-util-visit": "5.0.0"
   },
   "devDependencies": {
+    "electron-builder": "25.1.8",
+    "rimraf": "4.4.1",
     "cross-env": "7.0.3",
     "@blitz/eslint-plugin": "0.1.0",
     "@cloudflare/workers-types": "^4.20250809.0",

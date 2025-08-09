@@ -17,10 +17,13 @@ importers:
       keytar:
         specifier: 7.9.0
         version: 7.9.0
+      mime:
+        specifier: ^4.0.7
+        version: 4.0.7
     devDependencies:
       electron:
-        specifier: 31.3.1
-        version: 31.3.1
+        specifier: 28.3.3
+        version: 28.3.3
 
 packages:
 
@@ -44,6 +47,9 @@ packages:
 
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+
+  '@types/node@18.19.122':
+    resolution: {integrity: sha512-yzegtT82dwTNEe/9y+CM8cgb42WrUfMMCg2QqSddzO1J6uPmBD7qKCZ7dOHZP2Yrpm/kb0eqdNMn2MUyEiqBmA==}
 
   '@types/node@20.19.10':
     resolution: {integrity: sha512-iAFpG6DokED3roLSP0K+ybeDdIX6Bc0Vd3mLW5uDqThPWtNos3E+EqOM11mPQHKzfWHqEBuLjIlsBQQ8CsISmQ==}
@@ -211,8 +217,8 @@ packages:
     resolution: {integrity: sha512-7LZ2dR3N3bF93G2c4x+1NZ/8fpsKv6bKrMxeOQWLqdRbxvopxVqy9QXQy9axSV2O3P1kVGTj1q2wq5/W4isiOg==}
     engines: {node: '>=20'}
 
-  electron@31.3.1:
-    resolution: {integrity: sha512-9fiuWlRhBfygtcT+auRd/WdBK/f8LZZcrpx0RjpXhH2DPTP/PfnkC4JB1PW55qCbGbh4wAgkYbf4ExIag8oGCA==}
+  electron@28.3.3:
+    resolution: {integrity: sha512-ObKMLSPNhomtCOBAxFS8P2DW/4umkh72ouZUlUKzXGtYuPzgr1SYhskhFWgzAsPtUzhL2CzyV2sfbHcEW4CXqw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -429,6 +435,11 @@ packages:
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
+    hasBin: true
+
+  mime@4.0.7:
+    resolution: {integrity: sha512-2OfDPL+e03E0LrXaGYOtTFIYhiuzep94NSsuhrNULq+stylcJedcHdzHtz0atMUuGwJfFYs0YL5xeC/Ca2x0eQ==}
+    engines: {node: '>=16'}
     hasBin: true
 
   mimic-fn@4.0.0:
@@ -666,6 +677,9 @@ packages:
     resolution: {integrity: sha512-erJsJwQ0tKdwuqI0359U8ijkFmfiTcq25JvvzRVc1VP+2son1NJRXhxcAKJmAW3ajM8JSGAfsAXye8g4s+znxA==}
     engines: {node: '>=18'}
 
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
@@ -731,6 +745,10 @@ snapshots:
   '@types/keyv@3.1.4':
     dependencies:
       '@types/node': 20.19.10
+
+  '@types/node@18.19.122':
+    dependencies:
+      undici-types: 5.26.5
 
   '@types/node@20.19.10':
     dependencies:
@@ -915,10 +933,10 @@ snapshots:
       conf: 12.0.0
       type-fest: 4.41.0
 
-  electron@31.3.1:
+  electron@28.3.3:
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 20.19.10
+      '@types/node': 18.19.122
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -1174,6 +1192,8 @@ snapshots:
 
   mime@1.6.0: {}
 
+  mime@4.0.7: {}
+
   mimic-fn@4.0.0: {}
 
   mimic-response@1.0.1: {}
@@ -1428,6 +1448,8 @@ snapshots:
       mime-types: 2.1.35
 
   uint8array-extras@0.3.0: {}
+
+  undici-types@5.26.5: {}
 
   undici-types@6.21.0: {}
 
