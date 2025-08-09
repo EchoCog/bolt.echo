@@ -11,6 +11,7 @@
     "build": "remix vite:build --force",
     "build:pages": "./build-pages.sh",
     "dev": "remix vite:dev",
+    "dev:shell": "cross-env BOLTECHO_URL=http://localhost:5174 pnpm -C electron dev",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:deployment": "./scripts/test-deployment.sh",
@@ -86,6 +87,7 @@
     "unist-util-visit": "5.0.0"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "@blitz/eslint-plugin": "0.1.0",
     "@cloudflare/workers-types": "^4.20250809.0",
     "@remix-run/dev": "2.10.0",

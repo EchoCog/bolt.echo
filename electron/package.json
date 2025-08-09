@@ -1,0 +1,21 @@
+{
+  "name": "boltecho-shell",
+  "private": true,
+  "version": "0.1.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron-store": "9.0.0",
+    "express": "4.19.2",
+    "keytar": "7.9.0"
+  },
+  "devDependencies": {
+    "electron": "31.3.1"
+  }
+}
+
+

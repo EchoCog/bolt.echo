@@ -33,6 +33,19 @@ export default class SwitchableStream extends TransformStream {
     this._switches++;
   }
 
+  switchToText(text: string) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(data);
+        controller.close();
+      },
+    });
+
+    this.switchSource(stream);
+  }
+
   private async _pumpStream() {
     if (!this._currentReader || !this._controller) {
       throw new Error('Stream is not properly initialized');

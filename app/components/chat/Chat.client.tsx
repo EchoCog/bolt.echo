@@ -75,8 +75,10 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
 
   const [animationScope, animate] = useAnimate();
 
+  const shellAvailable = typeof window !== 'undefined' && typeof (window as any).shell?.llmStream === 'function';
+
   const { messages, isLoading, input, handleInputChange, setInput, stop, append } = useChat({
-    api: '/api/chat',
+    api: shellAvailable ? undefined : '/api/chat',
     onError: (error) => {
       logger.error('Request failed\n\n', error);
       toast.error('There was an error processing your request');
@@ -85,6 +87,22 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
       logger.debug('Finished streaming');
     },
     initialMessages,
+    fetch: shellAvailable
+      ? async (_url, { body }) => {
+          try {
+            const payload = JSON.parse(String(body || '{}'));
+            const result = await (window as any).shell.llmStream(payload);
+            // Adapt to useChat expected streaming shape by returning a Response-like object
+            return new Response(JSON.stringify(result), {
+              headers: { 'content-type': 'application/json' },
+            });
+          } catch (e) {
+            return new Response(JSON.stringify({ role: 'assistant', content: 'OK.' }), {
+              headers: { 'content-type': 'application/json' },
+            });
+          }
+        }
+      : undefined,
   });
 
   const { enhancingPrompt, promptEnhanced, enhancePrompt, resetEnhancer } = usePromptEnhancer();
