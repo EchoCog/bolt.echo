@@ -19,6 +19,9 @@ export function createWindow(rendererURL: string) {
     visualEffectState: 'active',
     webPreferences: {
       preload: path.join(app.getAppPath(), 'build', 'electron', 'preload', 'index.cjs'),
+      sandbox: false,
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   });
 

@@ -13,7 +13,7 @@ export async function loadServerBuild(): Promise<any> {
     return;
   }
 
-  const serverBuildPath = path.join(app.getAppPath(), 'build', 'server', 'index.js');
+  const serverBuildPath = path.join(app.getAppPath(), '..', 'build', 'server', 'index.js');
   console.log(`Loading server build... path is ${serverBuildPath}`);
 
   try {

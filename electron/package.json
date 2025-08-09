@@ -2,13 +2,14 @@
   "name": "boltecho-shell",
   "private": true,
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "../build/electron/main/index.mjs",
   "type": "module",
   "scripts": {
-    "dev": "electron .",
-    "start": "electron ."
+    "dev": "NODE_ENV=development electron --no-sandbox .",
+    "start": "NODE_ENV=production electron --no-sandbox ."
   },
   "dependencies": {
+    "electron-log": "^5.4.2",
     "electron-store": "9.0.0",
     "express": "4.20.0",
     "keytar": "7.9.0",
