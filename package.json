@@ -3,7 +3,7 @@
   "description": "Deep Tree Echo AI Agent",
   "private": true,
   "license": "MIT",
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@10.14.0",
   "sideEffects": false,
   "type": "module",
   "scripts": {
@@ -87,7 +87,7 @@
   },
   "devDependencies": {
     "@blitz/eslint-plugin": "0.1.0",
-    "@cloudflare/workers-types": "^4.20250726.0",
+    "@cloudflare/workers-types": "^4.20250809.0",
     "@remix-run/dev": "2.10.0",
     "@types/diff": "5.2.1",
     "@types/node": "22.10.4",
