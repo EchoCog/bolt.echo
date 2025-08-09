@@ -15,6 +15,11 @@ import { reloadOnChange } from './utils/reload';
 
 Object.assign(console, log.functions);
 
+// Disable sandbox for headless environments
+app.commandLine.appendSwitch('--no-sandbox');
+app.commandLine.appendSwitch('--disable-setuid-sandbox');
+app.commandLine.appendSwitch('--disable-dev-shm-usage');
+
 console.debug('main: import.meta.env:', import.meta.env);
 console.log('main: isDev:', isDev);
 console.log('NODE_ENV:', global.process.env.NODE_ENV);
