@@ -109,7 +109,7 @@
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "4.3.4",
     "cross-env": "7.0.3",
-    "electron": "^28.3.3",
+    "electron": "^35.7.5",
     "electron-builder": "25.1.8",
     "fast-glob": "3.3.2",
     "is-ci": "3.0.1",
