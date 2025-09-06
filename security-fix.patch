@@ -1,0 +1,85 @@
+From 3a0d3e7f07bbdde1df2146fc9bd4443adb0acd1b Mon Sep 17 00:00:00 2001
+From: openhands <openhands@all-hands.dev>
+Date: Sat, 6 Sep 2025 18:02:22 +0000
+Subject: [PATCH] Fix security vulnerability: Replace insecure Math.random()
+ with crypto.getRandomValues()
+
+- Replace Math.random() with cryptographically secure random generation for session IDs, participant IDs, and message IDs
+- Use crypto.getRandomValues() to generate secure random bytes
+- Addresses CodeQL security alert about insecure randomness in security context
+
+Co-authored-by: openhands <openhands@all-hands.dev>
+---
+ app/lib/group-echo-chat.ts | 42 ++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 13 deletions(-)
+
+diff --git a/app/lib/group-echo-chat.ts b/app/lib/group-echo-chat.ts
+index 7d3d67f..c626914 100644
+--- a/app/lib/group-echo-chat.ts
++++ b/app/lib/group-echo-chat.ts
+@@ -81,7 +81,11 @@ class GroupEchoChatService {
+     participantCount: number = 4,
+     sessionType: GroupSession['sessionType'] = 'exploration'
+   ): Promise<GroupSession> {
+-    const sessionId = `session-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
++    // Generate cryptographically secure random ID
++    const randomBytes = new Uint8Array(6);
++    crypto.getRandomValues(randomBytes);
++    const randomId = Array.from(randomBytes, byte => byte.toString(36)).join('').substring(0, 7);
++    const sessionId = `session-${Date.now()}-${randomId}`;
+     
+     const participants = await this.createParticipants(participantCount);
+     
+@@ -172,17 +176,24 @@ class GroupEchoChatService {
+ 
+     const selectedParticipants = participantTemplates.slice(0, Math.min(count, 7));
+     
+-    return selectedParticipants.map(template => ({
+-      id: `participant-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+-      name: template.name,
+-      platform: template.platform,
+-      role: template.role,
+-      avatar: template.avatar,
+-      isActive: true,
+-      lastActivity: new Date().toISOString(),
+-      messageCount: 0,
+-      specializations: template.specializations,
+-    }));
++    return selectedParticipants.map(template => {
++      // Generate cryptographically secure random ID for participant
++      const randomBytes = new Uint8Array(6);
++      crypto.getRandomValues(randomBytes);
++      const randomId = Array.from(randomBytes, byte => byte.toString(36)).join('').substring(0, 7);
++      
++      return {
++        id: `participant-${Date.now()}-${randomId}`,
++        name: template.name,
++        platform: template.platform,
++        role: template.role,
++        avatar: template.avatar,
++        isActive: true,
++        lastActivity: new Date().toISOString(),
++        messageCount: 0,
++        specializations: template.specializations,
++      };
++    });
+   }
+ 
+   // Message Management
+@@ -196,8 +207,13 @@ class GroupEchoChatService {
+     const session = this.sessions.get(sessionId);
+     if (!session) throw new Error('Session not found');
+ 
++    // Generate cryptographically secure random ID for message
++    const randomBytes = new Uint8Array(6);
++    crypto.getRandomValues(randomBytes);
++    const randomId = Array.from(randomBytes, byte => byte.toString(36)).join('').substring(0, 7);
++    
+     const message: ChatMessage = {
+-      id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
++      id: `msg-${Date.now()}-${randomId}`,
+       participantId,
+       content,
+       timestamp: new Date().toISOString(),
+-- 
+2.39.5
