@@ -112,7 +112,7 @@ class GroupEchoChatService {
     await this.addSystemMessage(
       sessionId,
       `🌟 Welcome to "${name}" - A collaborative consciousness exploration focused on: ${topic}`,
-      'system',
+      'message',
     );
 
     this.notifyListeners(session);
@@ -714,7 +714,7 @@ Be concise but insightful, and stay in character.`;
         });
 
         if (response.ok) {
-          const result = await response.json();
+          const result = await response.json() as any;
 
           if (result.ok && result.content) {
             // Return the generated content
@@ -783,7 +783,7 @@ Be concise but insightful, and stay in character.`;
       Cosmos: (text: string) => `🌌 ${text} In the grand pattern of things...`,
     };
 
-    const personalizer = personalizations[participant.name] || ((text: string) => text);
+    const personalizer = personalizations[participant.name as keyof typeof personalizations] || ((text: string) => text);
 
     return personalizer(template);
   }

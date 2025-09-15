@@ -88,9 +88,9 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     },
     initialMessages,
     fetch: shellAvailable
-      ? async (_url, { body }: { body?: BodyInit }) => {
+      ? async (url: RequestInfo | URL, init?: RequestInit) => {
           try {
-            const payload = JSON.parse(String(body || '{}'));
+            const payload = JSON.parse(String(init?.body || '{}'));
             const result = await (window as any).shell.llmStream(payload);
             return new Response(JSON.stringify(result), { headers: { 'content-type': 'application/json' } });
           } catch (e) {

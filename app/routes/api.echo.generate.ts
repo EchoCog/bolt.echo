@@ -61,7 +61,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
     }
 
     // Prepare messages for the provider
-    const messages = [];
+    const messages: { role: "user" | "assistant" | "system"; content: string; }[] = [];
     
     // Add system message if provided
     if (system) {
