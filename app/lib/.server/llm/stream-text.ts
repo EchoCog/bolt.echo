@@ -4,10 +4,6 @@ import { getAnthropicModel } from '~/lib/.server/llm/model';
 import { MAX_TOKENS } from './constants';
 import { getSystemPrompt } from './prompts';
 
-interface Env {
-  ANTHROPIC_API_KEY: string;
-}
-
 export type Messages = CoreMessage[];
 
 export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'>;

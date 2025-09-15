@@ -47,7 +47,7 @@ export async function generateWithOpenAI(apiKey: string, params: GenerateParams)
       throw new Error(`OpenAI API error: ${response.status} ${response.statusText} - ${JSON.stringify(error)}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as any;
     return data.choices[0]?.message?.content || '';
   } catch (error) {
     console.error('OpenAI generation error:', error);
@@ -100,7 +100,7 @@ export async function generateWithAnthropic(apiKey: string, params: GeneratePara
       throw new Error(`Anthropic API error: ${response.status} ${response.statusText} - ${JSON.stringify(error)}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as any;
     return data.content[0]?.text || '';
   } catch (error) {
     console.error('Anthropic generation error:', error);

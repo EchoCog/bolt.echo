@@ -5,7 +5,7 @@ import { setTheme } from '~/lib/stores/theme';
 
 // Initialize theme on client side
 const initializeTheme = () => {
-  const savedTheme = localStorage.getItem('bolt_theme');
+  const savedTheme = localStorage.getItem('bolt_theme') as 'dark' | 'light' | null;
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
   
