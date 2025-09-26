@@ -1,14 +1,18 @@
 /**
- * LLM Provider Adapters
+ * LLM Provider Adapters.
  *
  * Server-side adapters for OpenAI and Anthropic APIs.
  * Minimal implementation using fetch directly without external SDKs.
  */
 
-// Provider types
+/**
+ * Provider types
+ */
 export type ProviderId = 'openai' | 'anthropic';
 
-// Common parameters for generation requests
+/**
+ * Common parameters for generation requests
+ */
 export interface GenerateParams {
   model: string;
   messages: {
@@ -19,6 +23,7 @@ export interface GenerateParams {
 
 /**
  * Generate text using OpenAI's API
+ *
  * @param apiKey OpenAI API key
  * @param params Generation parameters
  * @returns Generated text
@@ -58,16 +63,21 @@ export async function generateWithOpenAI(apiKey: string, params: GenerateParams)
 
 /**
  * Generate text using Anthropic's API
+ *
  * @param apiKey Anthropic API key
  * @param params Generation parameters
  * @returns Generated text
  */
 export async function generateWithAnthropic(apiKey: string, params: GenerateParams): Promise<string> {
   try {
-    // Convert message format from OpenAI-style to Anthropic-style
+    /**
+     * Convert message format from OpenAI-style to Anthropic-style
+     */
     const anthropicMessages = params.messages.map((msg) => {
-      // Anthropic uses "human" and "assistant" roles instead of "user" and "assistant"
-      const role = msg.role === 'user' ? 'human' : msg.role === 'assistant' ? 'assistant' : 'human'; // Map system messages to human for simplicity
+      /**
+       * Anthropic uses "human" and "assistant" roles instead of "user" and "assistant"
+       */
+      const role = msg.role === 'user' ? 'human' : msg.role === 'assistant' ? 'assistant' : 'human'; // map system messages to human for simplicity
 
       return {
         role,
@@ -75,7 +85,9 @@ export async function generateWithAnthropic(apiKey: string, params: GeneratePara
       };
     });
 
-    // If first message is system, handle it specially for Anthropic
+    /**
+     * If first message is system, handle it specially for Anthropic
+     */
     const systemMessage = params.messages[0]?.role === 'system' ? params.messages[0].content : undefined;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -110,6 +122,7 @@ export async function generateWithAnthropic(apiKey: string, params: GeneratePara
 
 /**
  * Generate text using the specified provider
+ *
  * @param provider Provider ID ('openai' or 'anthropic')
  * @param apiKey API key for the provider
  * @param params Generation parameters
@@ -125,11 +138,14 @@ export async function generateWithProvider(
   }
 
   switch (provider) {
-    case 'openai':
+    case 'openai': {
       return generateWithOpenAI(apiKey, params);
-    case 'anthropic':
+    }
+    case 'anthropic': {
       return generateWithAnthropic(apiKey, params);
-    default:
+    }
+    default: {
       throw new Error(`Unsupported provider: ${provider}`);
+    }
   }
 }

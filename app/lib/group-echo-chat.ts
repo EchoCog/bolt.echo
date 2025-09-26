@@ -1,5 +1,5 @@
 /**
- * Group Echo Chat Service
+ * Group Echo Chat Service.
  *
  * A lightweight in-memory service for managing group chat sessions with AI participants.
  * Adapted from bolt-deep-tree-echo-hub-v7 for use in bolt.echo.
@@ -7,7 +7,9 @@
 
 import { getProviderDetails } from '~/lib/integration/switchboard';
 
-// Types for the group chat system
+/**
+ * Types for the group chat system
+ */
 export interface ChatParticipant {
   id: string;
   name: string;
@@ -65,15 +67,17 @@ export interface CoordinationRules {
 type ChatListener = (session: GroupSession) => void;
 
 class GroupEchoChatService {
-  private sessions: Map<string, GroupSession> = new Map();
-  private listeners: ChatListener[] = [];
-  private coordinationEngine: CoordinationEngine;
+  private _sessions: Map<string, GroupSession> = new Map();
+  private _listeners: ChatListener[] = [];
+  private _coordinationEngine: CoordinationEngine;
 
   constructor() {
-    this.coordinationEngine = new CoordinationEngine();
+    this._coordinationEngine = new CoordinationEngine();
   }
 
-  // Session Management
+  /**
+   * Session Management
+   */
   async createSession(
     name: string,
     topic: string,
@@ -81,7 +85,9 @@ class GroupEchoChatService {
     participantCount: number = 4,
     sessionType: GroupSession['sessionType'] = 'exploration',
   ): Promise<GroupSession> {
-    // Generate cryptographically secure random ID
+    /**
+     * Generate cryptographically secure random ID
+     */
     const randomBytes = new Uint8Array(6);
     crypto.getRandomValues(randomBytes);
 
@@ -106,9 +112,11 @@ class GroupEchoChatService {
       coordinationRules: this.getDefaultCoordinationRules(sessionType),
     };
 
-    this.sessions.set(sessionId, session);
+    this._sessions.set(sessionId, session);
 
-    // Send initial system message
+    /**
+     * Send initial system message
+     */
     await this.addSystemMessage(
       sessionId,
       `🌟 Welcome to "${name}" - A collaborative consciousness exploration focused on: ${topic}`,
@@ -117,13 +125,17 @@ class GroupEchoChatService {
 
     this.notifyListeners(session);
 
-    // Start coordination engine
-    this.coordinationEngine.startSession(session);
+    /**
+     * Start coordination engine
+     */
+    this._coordinationEngine.startSession(session);
 
     return session;
   }
 
-  // Participant Creation with diverse AI personalities
+  /**
+   * Participant Creation with diverse AI personalities
+   */
   private async createParticipants(count: number): Promise<ChatParticipant[]> {
     const participantTemplates = [
       {
@@ -180,7 +192,9 @@ class GroupEchoChatService {
     const selectedParticipants = participantTemplates.slice(0, Math.min(count, 7));
 
     return selectedParticipants.map((template) => {
-      // Generate cryptographically secure random ID for participant
+      /**
+       * Generate cryptographically secure random ID for participant
+       */
       const randomBytes = new Uint8Array(6);
       crypto.getRandomValues(randomBytes);
 
@@ -202,7 +216,9 @@ class GroupEchoChatService {
     });
   }
 
-  // Message Management
+  /**
+   * Message Management
+   */
   async sendMessage(
     sessionId: string,
     participantId: string,
@@ -210,13 +226,15 @@ class GroupEchoChatService {
     type: ChatMessage['type'] = 'message',
     replyTo?: string,
   ): Promise<ChatMessage> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       throw new Error('Session not found');
     }
 
-    // Generate cryptographically secure random ID for message
+    /**
+     * Generate cryptographically secure random ID for message
+     */
     const randomBytes = new Uint8Array(6);
     crypto.getRandomValues(randomBytes);
 
@@ -238,7 +256,9 @@ class GroupEchoChatService {
 
     session.messages.push(message);
 
-    // Update participant activity
+    /**
+     * Update participant activity
+     */
     const participant = session.participants.find((p) => p.id === participantId);
 
     if (participant) {
@@ -248,21 +268,25 @@ class GroupEchoChatService {
 
     this.notifyListeners(session);
 
-    // Trigger coordination engine for next response
+    /**
+     * Trigger coordination engine for next response
+     */
     setTimeout(() => {
-      this.coordinationEngine.processMessage(session, message);
+      this._coordinationEngine.processMessage(session, message);
     }, session.coordinationRules.messageDelay);
 
     return message;
   }
 
-  // Add system messages for coordination
+  /**
+   * Add system messages for coordination
+   */
   private async addSystemMessage(
     sessionId: string,
     content: string,
     type: ChatMessage['type'] = 'message',
   ): Promise<void> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       return;
@@ -334,7 +358,7 @@ class GroupEchoChatService {
     participantId: string,
     reactionType: MessageReaction['type'],
   ): Promise<void> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       throw new Error('Session not found');
@@ -361,31 +385,31 @@ class GroupEchoChatService {
 
   // Session Control
   async pauseSession(sessionId: string): Promise<void> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       throw new Error('Session not found');
     }
 
     session.status = 'paused';
-    this.coordinationEngine.pauseSession(sessionId);
+    this._coordinationEngine.pauseSession(sessionId);
     this.notifyListeners(session);
   }
 
   async resumeSession(sessionId: string): Promise<void> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       throw new Error('Session not found');
     }
 
     session.status = 'active';
-    this.coordinationEngine.resumeSession(session);
+    this._coordinationEngine.resumeSession(session);
     this.notifyListeners(session);
   }
 
   async endSession(sessionId: string): Promise<void> {
-    const session = this.sessions.get(sessionId);
+    const session = this._sessions.get(sessionId);
 
     if (!session) {
       throw new Error('Session not found');
@@ -397,7 +421,7 @@ class GroupEchoChatService {
     // Generate session synthesis
     await this.generateSessionSynthesis(session);
 
-    this.coordinationEngine.endSession(sessionId);
+    this._coordinationEngine.endSession(sessionId);
     this.notifyListeners(session);
   }
 
@@ -510,11 +534,11 @@ ${this.suggestFutureDirections(session)}
 
   // Session retrieval
   getSession(sessionId: string): GroupSession | undefined {
-    return this.sessions.get(sessionId);
+    return this._sessions.get(sessionId);
   }
 
   getAllSessions(): GroupSession[] {
-    return Array.from(this.sessions.values());
+    return Array.from(this._sessions.values());
   }
 
   getActiveSessions(): GroupSession[] {
@@ -523,15 +547,15 @@ ${this.suggestFutureDirections(session)}
 
   // Listeners
   addListener(callback: ChatListener): () => void {
-    this.listeners.push(callback);
+    this._listeners.push(callback);
 
     return () => {
-      this.listeners = this.listeners.filter((listener) => listener !== callback);
+      this._listeners = this._listeners.filter((listener) => listener !== callback);
     };
   }
 
   private notifyListeners(session: GroupSession): void {
-    this.listeners.forEach((callback) => callback(session));
+    this._listeners.forEach((callback) => callback(session));
   }
 }
 

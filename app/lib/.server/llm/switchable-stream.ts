@@ -32,7 +32,9 @@ export default class SwitchableStream extends TransformStream {
   }
 
   switchToText(text: string) {
-    // Create a readable stream from the text
+    /**
+     * Create a readable stream from the text
+     */
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       start(controller) {
