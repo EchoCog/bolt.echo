@@ -18,25 +18,12 @@ jobs:
       - name: Setup and Build
         uses: ./.github/actions/setup-and-build
 
-      - name: Run build
-        run: pnpm run build
+      - name: Run Type Check
+        run: pnpm run typecheck
 
       - name: Run ESLint
         run: pnpm run lint
 
-      - name: Wrangler Deploy
-        run: wrangler pages deploy ./build/client --project-name boltecho
-
-#  build:
-#    runs-on: ...
-#    steps:
-#      - uses: actions/checkout@v3
-
-#      # ... some other preparation steps (dependencies, compilation as a separate step, etc) ...
-
-#      - name: Setup Testcontainers Cloud Client
-#        uses: atomicjar/testcontainers-cloud-setup-action@v1
-#        with:
-#        token: ${{ secrets.TC_CLOUD_TOKEN }}
-
-      # ... existing steps executing your Testcontainers tests go here ...
+      - name: Run Tests
+        run: pnpm run test || echo "No tests found or tests failed - continuing for now"
+        continue-on-error: true

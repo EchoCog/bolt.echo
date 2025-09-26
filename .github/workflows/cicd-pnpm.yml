@@ -19,17 +19,24 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.4.0
+          version: 10.14.0
           run_install: false # Disable auto-install to customize steps
 
-      # Step 3: Install Dependencies
+      # Step 3: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+          cache: pnpm
+
+      # Step 4: Install Dependencies
       - name: Install Dependencies
         run: pnpm install
 
-      # Step 4: Build Project
+      # Step 5: Build Project
       - name: Build Project
         run: pnpm run build
 
-      # Step 5: Run Tests
+      # Step 6: Run Tests
       - name: Run Tests
         run: pnpm run test
