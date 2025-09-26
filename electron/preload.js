@@ -9,5 +9,3 @@ contextBridge.exposeInMainWorld('shell', {
   onDeepLink: (cb) => ipcRenderer.on('deeplink', (_e, url) => cb(url)),
   openSettings: () => ipcRenderer.invoke('settings:open'),
 });
-
-

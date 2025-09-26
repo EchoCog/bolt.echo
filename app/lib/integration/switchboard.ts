@@ -1,6 +1,6 @@
 /**
  * Switchboard Integration Hub
- * 
+ *
  * Client-side switchboard to control which provider each participant uses in group chats.
  * Maintains an in-memory map of participant configurations.
  */
@@ -18,13 +18,13 @@ export interface ProviderConfig {
 // Default models for each provider
 export const DEFAULT_MODELS = {
   openai: 'gpt-4o-mini',
-  anthropic: 'claude-3-haiku-20240307'
+  anthropic: 'claude-3-haiku-20240307',
 };
 
 // Default configuration (simulated and disabled)
 const DEFAULT_CONFIG: ProviderConfig = {
   enabled: false,
-  provider: 'simulated'
+  provider: 'simulated',
 };
 
 /**
@@ -39,10 +39,12 @@ class Switchboard {
   setParticipantConfig(participantId: string, config: ProviderConfig): void {
     this.participantConfigs.set(participantId, {
       ...config,
+
       // Ensure model is set if using a real provider
-      model: config.provider !== 'simulated' && !config.model
-        ? DEFAULT_MODELS[config.provider as keyof typeof DEFAULT_MODELS]
-        : config.model
+      model:
+        config.provider !== 'simulated' && !config.model
+          ? DEFAULT_MODELS[config.provider as keyof typeof DEFAULT_MODELS]
+          : config.model,
     });
   }
 
@@ -70,6 +72,7 @@ class Switchboard {
     this.participantConfigs.forEach((config, id) => {
       configs[id] = config;
     });
+
     return configs;
   }
 
@@ -102,11 +105,17 @@ class Switchboard {
    */
   getProviderDetails(participantId: string): { provider: ProviderId; model?: string } | null {
     const config = this.getParticipantConfigWithDefault(participantId);
-    if (!config.enabled) return null;
-    
+
+    if (!config.enabled) {
+      return null;
+    }
+
     return {
       provider: config.provider,
-      model: config.provider !== 'simulated' ? (config.model || DEFAULT_MODELS[config.provider as keyof typeof DEFAULT_MODELS]) : undefined
+      model:
+        config.provider !== 'simulated'
+          ? config.model || DEFAULT_MODELS[config.provider as keyof typeof DEFAULT_MODELS]
+          : undefined,
     };
   }
 }
@@ -115,22 +124,17 @@ class Switchboard {
 const switchboard = new Switchboard();
 
 // Export functions
-export const setParticipantConfig = (id: string, config: ProviderConfig) => 
+export const setParticipantConfig = (id: string, config: ProviderConfig) =>
   switchboard.setParticipantConfig(id, config);
 
-export const getParticipantConfig = (id: string): ProviderConfig | undefined => 
-  switchboard.getParticipantConfig(id);
+export const getParticipantConfig = (id: string): ProviderConfig | undefined => switchboard.getParticipantConfig(id);
 
-export const getAll = (): Record<string, ProviderConfig> => 
-  switchboard.getAll();
+export const getAll = (): Record<string, ProviderConfig> => switchboard.getAll();
 
-export const setMany = (map: Record<string, ProviderConfig>) => 
-  switchboard.setMany(map);
+export const setMany = (map: Record<string, ProviderConfig>) => switchboard.setMany(map);
 
-export const hasRealProviderEnabled = (id: string): boolean =>
-  switchboard.hasRealProviderEnabled(id);
+export const hasRealProviderEnabled = (id: string): boolean => switchboard.hasRealProviderEnabled(id);
 
-export const getProviderDetails = (id: string) =>
-  switchboard.getProviderDetails(id);
+export const getProviderDetails = (id: string) => switchboard.getProviderDetails(id);
 
 export default switchboard;

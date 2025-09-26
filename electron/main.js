@@ -19,9 +19,7 @@ let llamaProc = null;
 
 // Ensure custom protocol is registered before app is ready
 try {
-  protocol.registerSchemesAsPrivileged?.([
-    { scheme: 'boltecho', privileges: { secure: true, standard: true } },
-  ]);
+  protocol.registerSchemesAsPrivileged?.([{ scheme: 'boltecho', privileges: { secure: true, standard: true } }]);
 } catch (err) {
   console.warn('[shell] protocol registration warning:', err);
 }
@@ -74,7 +72,6 @@ function createWindow() {
   });
 }
 
-
 function setupMenu() {
   try {
     const template = [
@@ -84,7 +81,11 @@ function setupMenu() {
           { label: 'Settings', accelerator: 'Ctrl+,', click: () => createSettingsWindow() },
           { type: 'separator' },
           { label: 'Reload', accelerator: 'Ctrl+R', click: () => mainWindow?.webContents.reload() },
-          { label: 'Toggle DevTools', accelerator: 'Ctrl+Shift+I', click: () => mainWindow?.webContents.toggleDevTools() },
+          {
+            label: 'Toggle DevTools',
+            accelerator: 'Ctrl+Shift+I',
+            click: () => mainWindow?.webContents.toggleDevTools(),
+          },
           { type: 'separator' },
           { role: 'quit' },
         ],
@@ -124,7 +125,10 @@ async function isHttpOk(url) {
 
 async function ensureLlamaServer() {
   const enabled = store.get('llama.enabled');
-  if (enabled === false) return false;
+
+  if (enabled === false) {
+    return false;
+  }
 
   const llamaBinaryPath = store.get('llama.binaryPath');
   const modelPath = store.get('llama.modelPath');
@@ -136,17 +140,25 @@ async function ensureLlamaServer() {
   }
 
   const healthUrl = `http://${host}:${port}/health`;
-  if (await isHttpOk(healthUrl)) return true;
+
+  if (await isHttpOk(healthUrl)) {
+    return true;
+  }
 
   try {
     const args = [
       '--server',
       '--api',
-      '--host', host,
-      '--port', String(port),
-      '--n-gpu-layers', String(store.get('llama.nGpuLayers') ?? 0),
-      '--ctx-size', String(store.get('llama.ctx') ?? 2048),
-      '--model', modelPath,
+      '--host',
+      host,
+      '--port',
+      String(port),
+      '--n-gpu-layers',
+      String(store.get('llama.nGpuLayers') ?? 0),
+      '--ctx-size',
+      String(store.get('llama.ctx') ?? 2048),
+      '--model',
+      modelPath,
     ];
 
     console.log('[shell] starting llama.cpp:', llamaBinaryPath, args.join(' '));
@@ -163,10 +175,15 @@ async function ensureLlamaServer() {
   }
 
   const start = Date.now();
+
   while (Date.now() - start < 8000) {
-    if (await isHttpOk(healthUrl)) return true;
+    if (await isHttpOk(healthUrl)) {
+      return true;
+    }
+
     await new Promise((r) => setTimeout(r, 250));
   }
+
   return false;
 }
 
@@ -174,6 +191,7 @@ async function getSecret(key) {
   try {
     const mod = await import('keytar');
     const keytar = mod.default ?? mod;
+
     return await keytar.getPassword(SERVICE_NAME, key);
   } catch {
     // Fallback when keytar is unavailable in dev or not built
@@ -186,6 +204,7 @@ async function setSecret(key, value) {
     const mod = await import('keytar');
     const keytar = mod.default ?? mod;
     await keytar.setPassword(SERVICE_NAME, key, value);
+
     return true;
   } catch {
     store.set(`__secret__${key}`, value);
@@ -223,11 +242,15 @@ function basicFallback(messages) {
   const last = Array.isArray(messages) && messages.length ? messages[messages.length - 1].content : '';
   const onBattery = powerMonitor ? powerMonitor.onBatteryPower : false;
   const prefix = onBattery ? '[low-power] ' : '';
+
   return `${prefix}I received your request${last ? `: ${truncate(last, 160)}` : ''}.`;
 }
 
 function truncate(s, n) {
-  if (!s) return '';
+  if (!s) {
+    return '';
+  }
+
   return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
@@ -243,7 +266,9 @@ app.on('open-url', (_e, url) => {
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
 ipcMain.handle('settings:get', (_e, key) => store.get(key));
@@ -253,16 +278,18 @@ ipcMain.handle('settings:setSecret', async (_e, key, val) => setSecret(key, val)
 ipcMain.handle('settings:open', () => createSettingsWindow());
 
 ipcMain.handle('llm:stream', async (_e, payload) => {
-  // Placeholder to switch to cloud/local inference later
-  // For now call local basic endpoint to guarantee a response
+  /*
+   * Placeholder to switch to cloud/local inference later
+   * For now call local basic endpoint to guarantee a response
+   */
   try {
     const resp = await fetch('http://localhost:8788/api.local/chat', {
-      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload),
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload),
     });
     return await resp.json();
   } catch (e) {
     return { role: 'assistant', content: 'OK.' };
   }
 });
-
-

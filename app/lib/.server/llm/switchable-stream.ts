@@ -38,9 +38,9 @@ export default class SwitchableStream extends TransformStream {
       start(controller) {
         controller.enqueue(encoder.encode(text));
         controller.close();
-      }
+      },
     });
-    
+
     this.switchSource(stream);
   }
 
