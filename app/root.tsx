@@ -68,18 +68,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Ensure theme is properly set on the document element
     document.documentElement.setAttribute('data-theme', theme);
-    
+
     // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       const newTheme = e.matches ? 'dark' : 'light';
+
       if (!localStorage.getItem('bolt_theme')) {
         setTheme(newTheme);
       }
     };
-    
+
     mediaQuery.addEventListener('change', handleChange);
-    
+
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };

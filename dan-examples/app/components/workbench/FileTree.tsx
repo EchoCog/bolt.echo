@@ -656,9 +656,7 @@ function buildFileList(
     }
 
     let currentPath = '';
-
     let i = 0;
-    let depth = 0;
 
     while (i < segments.length) {
       const name = segments[i];
@@ -668,6 +666,11 @@ function buildFileList(
         i++;
         continue;
       }
+
+      // Calculate depth relative to rootFolder, not from the beginning of path
+      const rootSegments = rootFolder === '/' ? 0 : rootFolder.split('/').filter((segment) => segment).length;
+      const currentSegments = fullPath.split('/').filter((segment) => segment).length;
+      const depth = currentSegments - rootSegments;
 
       if (i === segments.length - 1 && dirent?.type === 'file') {
         fileList.push({
@@ -690,7 +693,6 @@ function buildFileList(
       }
 
       i++;
-      depth++;
     }
   }
 

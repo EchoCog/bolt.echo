@@ -18,9 +18,8 @@ export default async function handleRequest(
     const head = renderHeadToString({ request, remixContext, Head });
 
     // Prefer edge/web streams if available; otherwise fallback to Node pipeable stream
-    const maybeRenderToReadableStream: unknown = (ReactDOMServer as unknown as Record<string, unknown>)[
-      'renderToReadableStream'
-    ];
+    const maybeRenderToReadableStream: unknown = (ReactDOMServer as unknown as Record<string, unknown>)
+      .renderToReadableStream;
 
     if (typeof maybeRenderToReadableStream === 'function') {
       const renderToReadableStream = maybeRenderToReadableStream as (
@@ -28,16 +27,13 @@ export default async function handleRequest(
         options?: { signal?: AbortSignal; onError?: (error: unknown) => void },
       ) => ReadableStream<Uint8Array> & { allReady?: Promise<void> };
 
-      const readable = await renderToReadableStream(
-        <RemixServer context={remixContext} url={request.url} />,
-        {
-          signal: request.signal,
-          onError(error: unknown) {
-            console.error(error);
-            responseStatusCode = 500;
-          },
+      const readable = await renderToReadableStream(<RemixServer context={remixContext} url={request.url} />, {
+        signal: request.signal,
+        onError(error: unknown) {
+          console.error(error);
+          responseStatusCode = 500;
         },
-      );
+      });
 
       const body = new ReadableStream<Uint8Array>({
         start(controller) {
@@ -50,6 +46,7 @@ export default async function handleRequest(
           );
 
           const reader = readable.getReader();
+
           function read() {
             reader
               .read()
@@ -57,9 +54,14 @@ export default async function handleRequest(
                 if (done) {
                   controller.enqueue(new Uint8Array(new TextEncoder().encode(`</div></body></html>`)));
                   controller.close();
+
                   return;
                 }
-                if (value) controller.enqueue(value);
+
+                if (value) {
+                  controller.enqueue(value);
+                }
+
                 read();
               })
               .catch((error) => {
@@ -73,7 +75,10 @@ export default async function handleRequest(
       if (isbot(request.headers.get('user-agent') || '')) {
         // allReady may exist on some builds; check at runtime safely
         const anyReadable = readable as unknown as { allReady?: Promise<void> };
-        if (anyReadable.allReady) await anyReadable.allReady;
+
+        if (anyReadable.allReady) {
+          await anyReadable.allReady;
+        }
       }
 
       responseHeaders.set('Content-Type', 'text/html');
@@ -84,9 +89,9 @@ export default async function handleRequest(
     }
 
     // Fallback for Node builds: renderToPipeableStream
-    const maybeRenderToPipeableStream: unknown = (ReactDOMServer as unknown as Record<string, unknown>)[
-      'renderToPipeableStream'
-    ];
+    const maybeRenderToPipeableStream: unknown = (ReactDOMServer as unknown as Record<string, unknown>)
+      .renderToPipeableStream;
+
     if (typeof maybeRenderToPipeableStream === 'function') {
       const { PassThrough } = await import('node:stream');
       const { Readable } = await import('node:stream');
@@ -132,11 +137,15 @@ export default async function handleRequest(
     // Last-resort static HTML fallback
     const minimal = `<!DOCTYPE html><html lang="en" data-theme="light"><head>${head}</head><body><div id="root" class="w-full h-full"><noscript>App loaded without SSR</noscript></div></body></html>`;
     responseHeaders.set('Content-Type', 'text/html');
+
     return new Response(minimal, { headers: responseHeaders, status: responseStatusCode });
   } catch (error) {
     console.error(error);
-    const minimal = '<!doctype html><html><head><meta charset="utf-8"/><title>Fallback</title></head><body><div id="root">Fallback UI</div></body></html>';
+
+    const minimal =
+      '<!doctype html><html><head><meta charset="utf-8"/><title>Fallback</title></head><body><div id="root">Fallback UI</div></body></html>';
     responseHeaders.set('Content-Type', 'text/html');
+
     return new Response(minimal, { headers: responseHeaders, status: 200 });
   }
 }

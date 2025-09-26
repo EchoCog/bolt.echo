@@ -17,7 +17,7 @@ function initStore() {
     const persistedTheme = localStorage.getItem(kTheme) as Theme | undefined;
     const themeAttribute = document.querySelector('html')?.getAttribute('data-theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     return persistedTheme ?? (themeAttribute as Theme) ?? (systemPrefersDark ? 'dark' : 'light');
   }
 
@@ -38,7 +38,7 @@ export function toggleTheme() {
 
 export function setTheme(theme: Theme) {
   themeStore.set(theme);
-  
+
   if (typeof window !== 'undefined') {
     localStorage.setItem(kTheme, theme);
     document.documentElement.setAttribute('data-theme', theme);

@@ -9,15 +9,15 @@ export default defineConfig({
     colors: {
       // Ensure theme colors are available
       'bolt-elements': {
-        'borderColor': 'var(--bolt-elements-borderColor)',
-        'borderColorActive': 'var(--bolt-elements-borderColorActive)',
+        borderColor: 'var(--bolt-elements-borderColor)',
+        borderColorActive: 'var(--bolt-elements-borderColorActive)',
         'bg-depth-1': 'var(--bolt-elements-bg-depth-1)',
         'bg-depth-2': 'var(--bolt-elements-bg-depth-2)',
         'bg-depth-3': 'var(--bolt-elements-bg-depth-3)',
         'bg-depth-4': 'var(--bolt-elements-bg-depth-4)',
-        'textPrimary': 'var(--bolt-elements-textPrimary)',
-        'textSecondary': 'var(--bolt-elements-textSecondary)',
-        'textTertiary': 'var(--bolt-elements-textTertiary)',
+        textPrimary: 'var(--bolt-elements-textPrimary)',
+        textSecondary: 'var(--bolt-elements-textSecondary)',
+        textTertiary: 'var(--bolt-elements-textTertiary)',
         'background-depth-1': 'var(--bolt-elements-bg-depth-1)',
         'background-depth-2': 'var(--bolt-elements-bg-depth-2)',
         'background-depth-3': 'var(--bolt-elements-bg-depth-3)',
@@ -33,8 +33,9 @@ export default defineConfig({
         'sidebar-buttonBackgroundDefault': 'var(--bolt-elements-sidebar-buttonBackgroundDefault)',
         'sidebar-buttonBackgroundHover': 'var(--bolt-elements-sidebar-buttonBackgroundHover)',
         'sidebar-buttonText': 'var(--bolt-elements-sidebar-buttonText)',
-      }
+      },
     },
+
     // add your theme customizations here
   },
   rules: [

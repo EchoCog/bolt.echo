@@ -1,6 +1,6 @@
 /**
  * Network Assessment Utility
- * 
+ *
  * A lightweight utility for assessing basic network status from the browser/runtime.
  * Inspired by delta-echo's NetworkManager for bolt.echo integration.
  */
@@ -15,11 +15,7 @@ export interface NetworkStatus {
 }
 
 // Test endpoints for network assessment
-const TEST_ENDPOINTS = [
-  'https://cloudflare.com/cdn-cgi/trace',
-  'https://example.com',
-  'https://httpbin.org/get'
-];
+const TEST_ENDPOINTS = ['https://cloudflare.com/cdn-cgi/trace', 'https://example.com', 'https://httpbin.org/get'];
 
 // Small resource for bandwidth estimation (adjust size as needed)
 const BANDWIDTH_TEST_URL = 'https://httpbin.org/bytes/100000';
@@ -43,6 +39,7 @@ export async function assessNetworkStatus(): Promise<NetworkStatus> {
       // Get connection type if available
       if ('connection' in navigator) {
         const connection = (navigator as any).connection;
+
         if (connection) {
           status.connectionType = connection.effectiveType || connection.type || 'unknown';
         }
@@ -51,7 +48,7 @@ export async function assessNetworkStatus(): Promise<NetworkStatus> {
       // Check if online property is available
       if ('onLine' in navigator) {
         status.isConnected = navigator.onLine;
-        
+
         // If browser reports offline, return early
         if (!status.isConnected) {
           return status;
@@ -64,42 +61,42 @@ export async function assessNetworkStatus(): Promise<NetworkStatus> {
     let successfulFetches = 0;
 
     // Test multiple endpoints with timeout
-    await Promise.all(TEST_ENDPOINTS.map(async (endpoint) => {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-        
-        const startTime = performance.now();
-        const response = await fetch(endpoint, { 
-          method: 'GET',
-          cache: 'no-store',
-          signal: controller.signal,
-          headers: { 'Cache-Control': 'no-cache' }
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (response.ok) {
-          const endTime = performance.now();
-          const latency = endTime - startTime;
-          latencies.push(latency);
-          successfulFetches++;
+    await Promise.all(
+      TEST_ENDPOINTS.map(async (endpoint) => {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+          const startTime = performance.now();
+          const response = await fetch(endpoint, {
+            method: 'GET',
+            cache: 'no-store',
+            signal: controller.signal,
+            headers: { 'Cache-Control': 'no-cache' },
+          });
+
+          clearTimeout(timeoutId);
+
+          if (response.ok) {
+            const endTime = performance.now();
+            const latency = endTime - startTime;
+            latencies.push(latency);
+            successfulFetches++;
+          }
+        } catch (error) {
+          // Ignore individual fetch errors
         }
-      } catch (error) {
-        // Ignore individual fetch errors
-      }
-    }));
+      }),
+    );
 
     // Update status based on fetch results
     if (successfulFetches > 0) {
       status.isConnected = true;
       status.dnsResolution = true;
-      
+
       // Calculate average latency
-      status.latencyMs = Math.round(
-        latencies.reduce((sum, latency) => sum + latency, 0) / latencies.length
-      );
-      
+      status.latencyMs = Math.round(latencies.reduce((sum, latency) => sum + latency, 0) / latencies.length);
+
       // Estimate bandwidth if we've confirmed connection
       try {
         status.bandwidth = await estimateBandwidth();
@@ -122,31 +119,33 @@ export async function assessNetworkStatus(): Promise<NetworkStatus> {
 async function estimateBandwidth(): Promise<number> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
-  
+
   const startTime = performance.now();
-  const response = await fetch(BANDWIDTH_TEST_URL, { 
+  const response = await fetch(BANDWIDTH_TEST_URL, {
     method: 'GET',
     cache: 'no-store',
-    signal: controller.signal 
+    signal: controller.signal,
   });
-  
+
   clearTimeout(timeoutId);
-  
+
   if (!response.ok) {
     throw new Error('Bandwidth test failed');
   }
-  
+
   // Get the response as array buffer to ensure full download
   const data = await response.arrayBuffer();
   const endTime = performance.now();
-  
-  // Calculate bandwidth in Mbps
-  // Formula: (size in bits) / (time in seconds) / 1,000,000
+
+  /*
+   * Calculate bandwidth in Mbps
+   * Formula: (size in bits) / (time in seconds) / 1,000,000
+   */
   const downloadTimeMs = endTime - startTime;
   const downloadTimeSec = downloadTimeMs / 1000;
   const dataSizeBits = data.byteLength * 8;
-  const bandwidthMbps = (dataSizeBits / downloadTimeSec) / 1000000;
-  
+  const bandwidthMbps = dataSizeBits / downloadTimeSec / 1000000;
+
   return Math.round(bandwidthMbps * 100) / 100; // Round to 2 decimal places
 }
 
