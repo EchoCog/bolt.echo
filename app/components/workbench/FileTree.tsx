@@ -288,7 +288,7 @@ function buildFileList(
         continue;
       }
 
-      // Calculate depth relative to rootFolder, not from the beginning of path
+      // calculate depth relative to rootFolder, not from the beginning of path
       const rootSegments = rootFolder === '/' ? 0 : rootFolder.split('/').filter((segment) => segment).length;
       const currentSegments = fullPath.split('/').filter((segment) => segment).length;
       const depth = currentSegments - rootSegments;
@@ -355,7 +355,7 @@ function sortFileList(rootFolder: string, nodeList: Node[], hideRoot: boolean): 
   for (const node of nodeList) {
     nodeMap.set(node.fullPath, node);
 
-    const parentPath = node.fullPath.slice(0, node.fullPath.lastIndexOf('/'));
+    const parentPath = getParentPath(node.fullPath);
 
     if (parentPath !== rootFolder.slice(0, rootFolder.lastIndexOf('/'))) {
       if (!childrenMap.has(parentPath)) {
@@ -409,3 +409,19 @@ function compareNodes(a: Node, b: Node): number {
 
   return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
 }
+
+function getParentPath(path: string): string {
+  if (path === '/') {
+    return '';
+  }
+
+  const lastSlashIndex = path.lastIndexOf('/');
+
+  if (lastSlashIndex <= 0) {
+    return '/';
+  }
+
+  return path.slice(0, lastSlashIndex);
+}
+
+export { buildFileList };
