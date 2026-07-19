@@ -12,6 +12,7 @@
   "scripts": {
     "deploy": "pnpm run build && wrangler deploy",
     "build": "remix vite:build --force",
+    "build:pages": "pnpm run build",
     "dev": "remix vite:dev",
     "dev:shell": "pnpm -C electron dev",
     "test": "vitest --run",
