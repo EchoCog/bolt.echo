@@ -1,15 +1,29 @@
-# wrangler.toml — Cloudflare Pages configuration
-# For Workers deployment, see wrangler.workers.toml
+#:schema node_modules/wrangler/config-schema.json
+# wrangler.toml — Cloudflare Workers configuration (single source of truth).
+# bolt.echo previously carried a second, conflicting Pages config
+# (wrangler.toml + wrangler.workers.toml); Workers Static Assets serve the
+# client build directly, so Pages is not needed. See EchoCog/toga-bolt for
+# the reference implementation of this deployment shape.
 name = "bolt-echo"
+main = "worker.js"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
+send_metrics = false
 
-# Output directory for Pages deployment (wrangler pages deploy)
-pages_build_output_dir = "build/client"
+# Workers Builds: build command
+[build]
+command = "pnpm install && pnpm run build"
 
-# Pages supports only "preview" and "production" named environments
+# Workers Static Assets – serves build/client as static files
+[assets]
+directory = "./build/client"
+binding = "APP_ASSETS"
+
 [env.production]
 name = "bolt-echo"
+
+[env.staging]
+name = "bolt-echo-staging"
 
 # Note: D1 database binding can be configured when needed
 # Uncomment and configure the following when ready:
@@ -17,3 +31,6 @@ name = "bolt-echo"
 # binding = "DB"
 # database_name = "bolt-echo-db"
 # database_id = "your-database-id-here"
+
+# API keys (ANTHROPIC_API_KEY, etc.) must be configured as encrypted
+# secrets in the Cloudflare dashboard, NOT as plaintext vars here.

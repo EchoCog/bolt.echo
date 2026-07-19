@@ -41,7 +41,7 @@ jobs:
         if: github.event.inputs.action == 'deploy-production'
         run: |
           npm run build
-          wrangler deploy --config wrangler.workers.toml --env production
+          wrangler deploy --config wrangler.toml --env production
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -50,7 +50,7 @@ jobs:
         if: github.event.inputs.action == 'deploy-staging'
         run: |
           npm run build
-          wrangler deploy --config wrangler.workers.toml --env staging
+          wrangler deploy --config wrangler.toml --env staging
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
