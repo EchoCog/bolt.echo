@@ -45,7 +45,7 @@ fi
 
 # Test build process
 echo "🏗️  Testing build process..."
-if pnpm run build:pages; then
+if pnpm run build; then
     echo "✅ Build completed successfully"
 else
     echo "❌ Build failed"

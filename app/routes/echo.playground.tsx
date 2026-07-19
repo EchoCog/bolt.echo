@@ -10,6 +10,8 @@ import {
   type ProviderId,
   type ProviderConfig,
 } from '~/lib/integration/switchboard';
+import { MelodyAvatarCanvas } from '~/components/live2d/MelodyAvatarCanvas';
+import { messageToExpression } from '~/lib/live2d/messageToCognitiveState';
 
 // Loader function to provide initial data
 export async function loader() {
@@ -138,7 +140,10 @@ function EchoPlaygroundClient() {
         className={`flex flex-col p-2 rounded ${isSelected ? 'bg-blue-100 dark:bg-blue-900' : ''}`}
       >
         <div className="flex items-center cursor-pointer" onClick={() => setSelectedParticipantId(participant.id)}>
-          <span className="text-2xl mr-2">{participant.avatar}</span>
+          <span className="relative mr-2" title={`${participant.expression} (${Math.round(participant.expressionBlend * 100)}%)`}>
+            <MelodyAvatarCanvas expression={participant.expression} blend={participant.expressionBlend} size={40} />
+            <span className="absolute -bottom-1 -right-1 text-sm">{participant.avatar}</span>
+          </span>
           <div>
             <div className="font-medium">{participant.name}</div>
             <div className="text-xs opacity-75">{participant.role}</div>
@@ -189,10 +194,15 @@ function EchoPlaygroundClient() {
   // Render a chat message
   const renderMessage = (message: ChatMessage, participants: ChatParticipant[]) => {
     const participant = participants.find((p) => p.id === message.participantId);
+    const { expression, blend } = messageToExpression(message);
+
     return (
       <div key={message.id} className="mb-4">
         <div className="flex items-center mb-1">
-          <span className="text-xl mr-2">{participant?.avatar || '👤'}</span>
+          <span className="relative mr-2">
+            <MelodyAvatarCanvas expression={expression} blend={blend} size={28} />
+            <span className="absolute -bottom-1 -right-1 text-xs">{participant?.avatar || '👤'}</span>
+          </span>
           <span className="font-medium">{participant?.name || 'Unknown'}</span>
           <span className="text-xs ml-2 opacity-75">{new Date(message.timestamp).toLocaleTimeString()}</span>
           <span className="ml-2 text-xs px-1 rounded bg-gray-200 dark:bg-gray-700">{message.type}</span>

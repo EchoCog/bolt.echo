@@ -6,6 +6,8 @@
  */
 
 import { getProviderDetails } from '~/lib/integration/switchboard';
+import type { MelodyExpression } from '~/lib/live2d/melody-adapter';
+import { messageToExpression } from '~/lib/live2d/messageToCognitiveState';
 
 /**
  * Types for the group chat system
@@ -20,6 +22,10 @@ export interface ChatParticipant {
   lastActivity: string;
   messageCount: number;
   specializations: string[];
+
+  /** Live2D avatar articulation derived from the participant's most recent message. */
+  expression: MelodyExpression;
+  expressionBlend: number;
 }
 
 export interface ChatMessage {
@@ -212,6 +218,8 @@ class GroupEchoChatService {
         lastActivity: new Date().toISOString(),
         messageCount: 0,
         specializations: template.specializations,
+        expression: 'default',
+        expressionBlend: 1,
       };
     });
   }
@@ -264,6 +272,10 @@ class GroupEchoChatService {
     if (participant) {
       participant.lastActivity = new Date().toISOString();
       participant.messageCount++;
+
+      const { expression, blend } = messageToExpression(message);
+      participant.expression = expression;
+      participant.expressionBlend = blend;
     }
 
     this.notifyListeners(session);
