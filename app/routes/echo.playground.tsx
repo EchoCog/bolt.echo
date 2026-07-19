@@ -10,6 +10,7 @@ import {
   type ProviderId,
   type ProviderConfig,
 } from '~/lib/integration/switchboard';
+import { MELODY_EXPRESSION_EMOJI } from '~/lib/live2d/melody-adapter';
 
 // Loader function to provide initial data
 export async function loader() {
@@ -138,7 +139,15 @@ function EchoPlaygroundClient() {
         className={`flex flex-col p-2 rounded ${isSelected ? 'bg-blue-100 dark:bg-blue-900' : ''}`}
       >
         <div className="flex items-center cursor-pointer" onClick={() => setSelectedParticipantId(participant.id)}>
-          <span className="text-2xl mr-2">{participant.avatar}</span>
+          <span className="relative text-2xl mr-2">
+            {participant.avatar}
+            <span
+              className="absolute -bottom-1 -right-1 text-xs"
+              title={`${participant.expression} (${Math.round(participant.expressionBlend * 100)}%)`}
+            >
+              {MELODY_EXPRESSION_EMOJI[participant.expression]}
+            </span>
+          </span>
           <div>
             <div className="font-medium">{participant.name}</div>
             <div className="text-xs opacity-75">{participant.role}</div>
@@ -192,7 +201,10 @@ function EchoPlaygroundClient() {
     return (
       <div key={message.id} className="mb-4">
         <div className="flex items-center mb-1">
-          <span className="text-xl mr-2">{participant?.avatar || '👤'}</span>
+          <span className="text-xl mr-2" title={participant?.expression}>
+            {participant?.avatar || '👤'}
+            {participant && MELODY_EXPRESSION_EMOJI[participant.expression]}
+          </span>
           <span className="font-medium">{participant?.name || 'Unknown'}</span>
           <span className="text-xs ml-2 opacity-75">{new Date(message.timestamp).toLocaleTimeString()}</span>
           <span className="ml-2 text-xs px-1 rounded bg-gray-200 dark:bg-gray-700">{message.type}</span>
